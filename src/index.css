@@ -1,0 +1,312 @@
+/* Imposta altezza completa per root */
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Wrapper principale dell'app */
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Il contenuto principale occupa lo spazio disponibile */
+.content {
+  flex: 1;
+}
+
+/* Sfondo generale con gradiente */
+body {
+  background: black;
+  color: #f8f9fa;
+}
+
+/*------------- SERVIZI ---------------*/
+
+/* Contenitore della sezione servizi */
+#servizi {
+  background: linear-gradient(180deg, rgb(0 0 0) 0%, rgb(20 23 25) 100%);
+  padding: 50px 0;
+  border-radius: 10px;
+  border: solid 0.2px #522e03;
+}
+
+/* Stile delle card con effetto luce */
+.fixedCard {
+  max-width: 300px;
+  margin: auto;
+  background: linear-gradient(180deg, #2e3338 0%, #343a40 100%);
+  color: #f8f9fa;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0px 0px 15px rgba(255, 140, 0, 0.2); /* Neon arancione dietro la card */
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.fixedCard:hover {
+  box-shadow: 0px 0px 25px rgba(255, 140, 0, 0.4); /* Effetto neon arancione più forte al passaggio */
+  transform: translateY(-5px);
+}
+
+/* Immagini con bordi squadrati sotto */
+.fixedCard img {
+  height: 200px;
+  object-fit: cover;
+  width: 100%;
+  border-radius: 10px 10px 0 0;
+  transition: opacity 0.3s;
+}
+
+.fixedCard:hover img {
+  opacity: 0.8;
+}
+
+/* Overlay sulle immagini */
+.fixedCard .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 200px;
+  background: rgba(255, 255, 255, 0.1);
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: 1;
+}
+
+.fixedCard:hover .overlay {
+  opacity: 0.3;
+}
+
+/* Stili per il contenuto della card */
+.fixedCard .card-body {
+  padding: 1.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+.fixedCard .card-title,
+.fixedCard .card-text {
+  text-align: center;
+}
+
+.fixedCard .card-title {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.fixedCard .card-text {
+  font-size: 1rem;
+  color: #e0e0e0;
+}
+
+/* Titoli con effetto glow */
+h2,
+h3 {
+  text-align: center;
+  color: #ffffff;
+  text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
+}
+
+/* Lista dettagli con effetto glow */
+.dettagli-container {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(255, 140, 0, 0.2); /* Neon arancione dietro la descrizione */
+}
+
+/* Stili per il testo nella lista dettagli */
+.dettagli-container ul li {
+  font-size: 1.1rem;
+  color: #e0e0e0;
+  text-shadow: 0px 0px 5px rgba(255, 140, 0, 0.2);
+}
+
+/* Pulsante con effetto neon */
+.btn-primary {
+  background: linear-gradient(45deg, #ff8c00, #ff4500);
+  border: none;
+  color: #ffffff;
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.btn-primary:hover {
+  box-shadow: 0px 0px 15px rgba(255, 140, 0, 0.8);
+  transform: scale(1.05);
+}
+
+.link-arancione {
+  color: #ff8c00 !important;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.link-arancione:hover {
+  color: #ffa500 !important;
+  text-shadow: 0px 0px 10px rgba(255, 140, 0, 0.5);
+}
+
+.link-rosso {
+  color: #a30606 !important;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.link-rosso:hover {
+  color: #ff5e00 !important;
+  text-shadow: 0px 0px 10px rgba(255, 140, 0, 0.5);
+}
+
+/* --------------- HOME --------------*/
+.home-container {
+  background: linear-gradient(180deg, #121212 0%, #2e3338 100%);
+}
+
+/* Stesso stile dei bottoni della pagina Servizi con il nuovo arancione */
+.btn-warning {
+  background: linear-gradient(45deg, #ff8c00, #ffb347);
+  border: none;
+  color: white !important;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  box-shadow: 0px 0px 10px rgba(255, 140, 0, 0.5);
+}
+
+.btn-warning:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 0px 20px rgba(255, 140, 0, 0.8);
+}
+
+/* Icone con il nuovo arancione */
+.icon-arancione {
+  color: #ff8c00 !important;
+  transition: transform 0.3s ease;
+}
+
+.icon-arancione:hover {
+  transform: scale(1.1);
+  text-shadow: 0px 0px 8px rgba(255, 140, 0, 0.8);
+}
+
+/*------------- CHI SONO ------------*/
+.chi-sono-container {
+  max-width: 900px;
+  margin: auto;
+  padding: 40px 20px;
+  background: linear-gradient(180deg, #121212 0%, #2e3338 100%);
+  color: #f8f9fa;
+  border-radius: 10px;
+}
+
+/* Stile dell'immagine profilo */
+.foto-profilo {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 15px rgba(255, 140, 0, 0.3);
+}
+
+/* Stile dei titoli */
+h4 {
+  color: #ff8c00;
+  font-weight: bold;
+}
+
+/* Lista con effetto neon */
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+ul li {
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+  text-shadow: 0px 0px 5px rgba(255, 140, 0, 0.3);
+}
+
+/* Per schermi piccoli: la foto va sopra il testo */
+@media (max-width: 768px) {
+  .foto-profilo {
+    margin-bottom: 20px;
+  }
+}
+
+/*------------- NAVBAR -------------*/
+
+.navbar-gradient {
+  background-color: #000000;
+
+  border-bottom: 2px solid rgba(255, 140, 0, 0.2);
+}
+
+/*------------------ FOOTER -------------*/
+
+.footer-gradient {
+  background: linear-gradient(180deg, #2e3338 0%, #121212 100%);
+}
+
+.footer-home {
+  background: linear-gradient(180deg, #2e3338 0%, #121212 100%);
+}
+
+/* Sfondo del footer nella pagina Servizi */
+.footer-servizi {
+  background: linear-gradient(180deg, #050505 0%, #121212 100%);
+}
+
+.footer-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #ff8c00;
+}
+
+.footer-link {
+  color: #f8f9fa;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+  color: #ff8c00;
+}
+
+.footer-divider {
+  border-top: 1px solid rgba(233, 142, 5, 0.5);
+  margin-top: -16px;
+}
+
+.footer-social {
+  color: #ff8c00;
+  font-size: 1.5rem;
+  transition: transform 0.3s ease, text-shadow 0.3s ease;
+}
+
+.footer-social:hover {
+  transform: scale(1.1);
+  text-shadow: 0px 0px 10px rgba(255, 140, 0, 0.8);
+}
+.contact-icon {
+  min-width: 25px;
+  text-align: center;
+}
+
+/*-------------ICONA EKIMINA ORENOTAZIONE ---------------*/
+.icon-delete {
+  color: red;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.icon-delete:hover {
+  transform: scale(1.2);
+  color: #ff4444;
+}
