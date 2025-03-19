@@ -28,6 +28,8 @@ const LoginComponent = () => {
       localStorage.setItem("userRole", data.ruolo);
       //salva l'id dell'utente
       localStorage.setItem("userId", data.id);
+      // salva il nome dell'utente
+      localStorage.setItem("nomeUtente", data.nome);
 
       // ritorno alla Home
       navigate("/");

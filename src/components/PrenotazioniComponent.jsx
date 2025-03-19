@@ -205,7 +205,7 @@ const PrenotazioniComponent = () => {
             <Modal.Title>Modifica Prenotazione</Modal.Title>
           </Modal.Header>
           <Modal.Body className="bg-dark text-light">
-            {/* Modifica Data e Ora */}
+            {/* ----- Data e Ora ------- */}
             <Form.Group>
               <Form.Label>Nuova Data e Ora</Form.Label>
               <Form.Control
@@ -215,7 +215,7 @@ const PrenotazioniComponent = () => {
               />
             </Form.Group>
 
-            {/* Modifica Servizio */}
+            {/* ------ Modifica Servizio ------- */}
             <Form.Group className="mt-3">
               <Form.Label>Nuovo Servizio</Form.Label>
               <Form.Select
@@ -229,6 +229,7 @@ const PrenotazioniComponent = () => {
                 ))}
               </Form.Select>
 
+              {/* ----- Note ------*/}
               <Form.Group className="mb-3">
                 <Form.Label>Note</Form.Label>
                 <Form.Control

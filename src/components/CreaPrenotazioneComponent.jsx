@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { Alert, Button, Col, Container, Form, Row } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 
 const CreaPrenotazioneComponent = () => {
@@ -11,6 +11,7 @@ const CreaPrenotazioneComponent = () => {
   const [note, setNote] = useState("");
   const [error, setError] = useState("");
   const [errorToken, setErrorToken] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
 
   const navigate = useNavigate();
   const jwtToken = localStorage.getItem("jwtToken");
@@ -57,6 +58,7 @@ const CreaPrenotazioneComponent = () => {
       note
     };
 
+    //fetch per creare una nuova prenotazione
     fetch("http://localhost:8080/prenotazioni/new", {
       method: "POST",
       headers: {
@@ -109,14 +111,20 @@ const CreaPrenotazioneComponent = () => {
                 </div>
               )}
 
+              {showAlert && (
+                <Alert variant="warning" className="alert alert-danger mt-5 text-center">
+                  Prima di selezionare un orario, scegli una data
+                </Alert>
+              )}
+
               <Form onSubmit={handleCreaPrenotazione} className="mt-5">
-                {/* Selezione della Data */}
+                {/* Data */}
                 <Form.Group className="mb-3">
                   <Form.Label>Seleziona la Data</Form.Label>
                   <Form.Control type="date" value={dataSelezionata} onChange={(e) => setDataSelezionata(e.target.value)} required />
                 </Form.Group>
 
-                {/* Selezione del Servizio */}
+                {/* servizi*/}
                 <Form.Group className="mb-3">
                   <Form.Label>Seleziona un Servizio</Form.Label>
                   <Form.Select defaultValue="" onChange={(e) => setSelectedServizio(e.target.value)} required>
@@ -125,13 +133,13 @@ const CreaPrenotazioneComponent = () => {
                     </option>
                     {servizi.map((servizio) => (
                       <option key={servizio.id} value={servizio.id}>
-                        {servizio.nomeServizio}
+                        {servizio.nomeServizio} - Durata: {servizio.durata} minuti
                       </option>
                     ))}
                   </Form.Select>
                 </Form.Group>
 
-                {/* Selezione dell'Orario disponibile */}
+                {/* orari disponibili */}
                 <Form.Group className="mb-3">
                   <Form.Label>Orari Disponibili</Form.Label>
                   <Form.Select
@@ -139,14 +147,17 @@ const CreaPrenotazioneComponent = () => {
                     value={orarioSelezionato}
                     onChange={(e) => {
                       setOrarioSelezionato(e.target.value);
-                      setTimeout(() => {
-                        e.target.blur(); // Forza la chiusura immediata
-                      }, 80); // Ritardo di 100ms per una chiusura più fluida
+                      e.target.blur(); //chiude la select una volta selezionato l'orario
                     }}
                     required
-                    disabled={!orariDisponibili.length}
                     onFocus={(e) => {
-                      e.target.size = 5; // Mostra 8 opzioni quando aperta
+                      if (!dataSelezionata) {
+                        setShowAlert(true);
+                        setTimeout(() => setShowAlert(false), 5000); // Nasconde il messaggio dopo 3 secondi
+                        e.target.blur(); // Impedisce l'apertura della select
+                      } else {
+                        e.target.size = 5; // Se la data è selezionata, mostra 5 opzioni
+                      }
                     }}
                     onBlur={(e) => {
                       e.target.size = 1; // Torna a mostrare solo 1 opzione quando chiusa
@@ -161,13 +172,12 @@ const CreaPrenotazioneComponent = () => {
                   </Form.Select>
                 </Form.Group>
 
-                {/* Inserimento Note */}
+                {/* Note */}
                 <Form.Group className="mb-3">
                   <Form.Label>Note</Form.Label>
                   <Form.Control as="textarea" rows={3} value={note} onChange={(e) => setNote(e.target.value)} placeholder="Inserisci eventuali note..." />
                 </Form.Group>
 
-                {/* Bottone di invio */}
                 <div className="d-flex justify-content-center mt-4">
                   <Button variant="primary" type="submit">
                     Crea Prenotazione

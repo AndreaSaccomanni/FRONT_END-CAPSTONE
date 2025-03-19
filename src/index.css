@@ -7,6 +7,16 @@ body,
   padding: 0;
 }
 
+h1,
+h2,
+h3 {
+  font-family: "Montserrat", sans-serif;
+}
+body,
+p {
+  font-family: "Roboto", sans-serif;
+}
+
 /* Wrapper principale dell'app */
 .App {
   display: flex;
@@ -309,4 +319,8 @@ ul li {
 .icon-delete:hover {
   transform: scale(1.2);
   color: #ff4444;
+}
+
+.nome-utente {
+  color: #ff8c00;
 }
