@@ -9,6 +9,7 @@ const PrenotazioniComponent = () => {
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [selectedPrenotazione, setSelectedPrenotazione] = useState(null);
+  const [indirizzi, setIndirizzi] = useState([]);
 
   const [servizi, setServizi] = useState([]);
 
@@ -113,6 +114,7 @@ const PrenotazioniComponent = () => {
       dataOraPrenotazione: selectedPrenotazione.dataOraPrenotazione,
       servizioId: selectedPrenotazione.servizioId,
       utenteId: selectedPrenotazione.utenteId,
+      indirizzoId: selectedPrenotazione.indirizzoId,
       note: selectedPrenotazione.note
     };
 
@@ -144,12 +146,26 @@ const PrenotazioniComponent = () => {
       .catch((err) => setError(err.message));
   };
 
+  // Fetch per ottenere tutti gli indirizzi
+  useEffect(() => {
+    fetch("http://localhost:8080/indirizzi/all", {
+      headers: { Authorization: `Bearer ${jwtToken}` }
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error("Errore nel recupero degli indirizzi");
+        return response.json();
+      })
+      .then((data) => setIndirizzi(data))
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false));
+  }, [jwtToken]);
+
   return (
     <Container className="my-5">
       {userRole == "ADMIN" || userRole == "PERSONAL_TRAINER" ? (
-        <h2 className="text-center mb-5">Tutte le prenotazioni</h2>
+        <h2 className="text-center mb-3">Tutte le prenotazioni</h2>
       ) : (
-        <h2 className="text-center mb-5">Le tue prenotazioni</h2>
+        <h2 className="text-center mb-3">Le tue prenotazioni</h2>
       )}
 
       {loading && <Spinner animation="border" className="d-block mx-auto" />}
@@ -158,45 +174,53 @@ const PrenotazioniComponent = () => {
       {!loading && !error && prenotazioni.length === 0 && <Alert variant="warning">Nessuna prenotazione attiva.</Alert>}
 
       {!loading && prenotazioni.length > 0 && (
-        <Table striped bordered hover responsive="sm" variant="dark" className="mt-5">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Servizio</th>
-              <th>Data</th>
-              <th>Ora</th>
-              <th>Note</th>
-              {userRole === "ADMIN" || userRole === "PERSONAL_TRAINER" ? <th>Utente</th> : null}
-              <th>Azioni</th>
-            </tr>
-          </thead>
-          <tbody>
-            {prenotazioni.map((prenotazione, index) => (
-              <tr key={prenotazione.prenotazioneId || index}>
-                <td>{index + 1}</td>
-                <td>{prenotazione.nomeServizio}</td>
-                <td>{new Date(prenotazione.dataOraPrenotazione).toLocaleDateString()}</td>
-                <td>{new Date(prenotazione.dataOraPrenotazione).toLocaleTimeString()}</td>
-                <td>{prenotazione.note || "Nessuna nota"}</td>
-                {userRole === "ADMIN" || userRole === "PERSONAL_TRAINER" ? (
-                  <td>
-                    {prenotazione.nomeUtente} {prenotazione.cognomeUtente}
-                  </td>
-                ) : null}
-                <td>
-                  <div className="d-flex justify-content-center align-item-center">
-                    <TfiPencilAlt className="icon-edit me-2 mt-1" onClick={() => openEditModal(prenotazione)} style={{ cursor: "pointer", color: "orange" }} />
-                    <FaTrashAlt
-                      className="icon-delete ms-3 mt-1"
-                      style={{ cursor: "pointer", color: "red" }}
-                      onClick={() => handleDelete(prenotazione.prenotazioneId)}
-                    />
-                  </div>
-                </td>
+        <div className="table-responsive">
+          <Table striped bordered hover responsive="sm" variant="dark" className="mt-5">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Servizio</th>
+                <th>Data</th>
+                <th>Ora</th>
+                <th>Indirizzo</th>
+                <th>Note</th>
+                {userRole === "ADMIN" || userRole === "PERSONAL_TRAINER" ? <th>Utente</th> : null}
+                <th>Azioni</th>
               </tr>
-            ))}
-          </tbody>
-        </Table>
+            </thead>
+            <tbody>
+              {prenotazioni.map((prenotazione, index) => (
+                <tr key={prenotazione.prenotazioneId || index}>
+                  <td>{index + 1}</td>
+                  <td>{prenotazione.nomeServizio}</td>
+                  <td>{new Date(prenotazione.dataOraPrenotazione).toLocaleDateString()}</td>
+                  <td>{new Date(prenotazione.dataOraPrenotazione).toLocaleTimeString()}</td>
+                  <td>{prenotazione.indirizzo}</td>
+                  <td>{prenotazione.note || "Nessuna nota"}</td>
+                  {userRole === "ADMIN" || userRole === "PERSONAL_TRAINER" ? (
+                    <td>
+                      {prenotazione.nomeUtente} {prenotazione.cognomeUtente}
+                    </td>
+                  ) : null}
+                  <td>
+                    <div className="d-flex justify-content-center align-item-center">
+                      <TfiPencilAlt
+                        className="icon-edit me-2 mt-1"
+                        onClick={() => openEditModal(prenotazione)}
+                        style={{ cursor: "pointer", color: "orange" }}
+                      />
+                      <FaTrashAlt
+                        className="icon-delete ms-3 mt-1"
+                        style={{ cursor: "pointer", color: "red" }}
+                        onClick={() => handleDelete(prenotazione.prenotazioneId)}
+                      />
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </div>
       )}
 
       {selectedPrenotazione && (
@@ -228,17 +252,31 @@ const PrenotazioniComponent = () => {
                   </option>
                 ))}
               </Form.Select>
+            </Form.Group>
 
-              {/* ----- Note ------*/}
-              <Form.Group className="mb-3">
-                <Form.Label>Note</Form.Label>
-                <Form.Control
-                  as="textarea"
-                  rows={3}
-                  value={selectedPrenotazione.note}
-                  onChange={(e) => setSelectedPrenotazione({ ...selectedPrenotazione, note: e.target.value })}
-                />
-              </Form.Group>
+            <Form.Group className="mt-3">
+              <Form.Label>Nuovo Indirizzo</Form.Label>
+              <Form.Select
+                value={selectedPrenotazione.indirizzoId}
+                onChange={(e) => setSelectedPrenotazione({ ...selectedPrenotazione, indirizzoId: parseInt(e.target.value) })}
+              >
+                {indirizzi.map((indirizzo, index) => (
+                  <option key={indirizzo.id || index} value={indirizzo.id}>
+                    {`${indirizzo.via} ${indirizzo.numeroCivico}, ${indirizzo.citta} (${indirizzo.provincia})`}
+                  </option>
+                ))}
+              </Form.Select>
+            </Form.Group>
+
+            {/* ----- Note ------*/}
+            <Form.Group className="mb-3">
+              <Form.Label>Note</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={3}
+                value={selectedPrenotazione.note}
+                onChange={(e) => setSelectedPrenotazione({ ...selectedPrenotazione, note: e.target.value })}
+              />
             </Form.Group>
           </Modal.Body>
 

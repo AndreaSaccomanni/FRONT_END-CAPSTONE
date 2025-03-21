@@ -12,6 +12,8 @@ const CreaPrenotazioneComponent = () => {
   const [error, setError] = useState("");
   const [errorToken, setErrorToken] = useState("");
   const [showAlert, setShowAlert] = useState(false);
+  const [indirizzi, setIndirizzi] = useState([]);
+  const [selectedIndirizzo, setSelectedIndirizzo] = useState("");
 
   const navigate = useNavigate();
   const jwtToken = localStorage.getItem("jwtToken");
@@ -55,6 +57,7 @@ const CreaPrenotazioneComponent = () => {
     const prenotazioneDTO = {
       servizioId: selectedServizio,
       dataOraPrenotazione,
+      indirizzoId: selectedIndirizzo,
       note
     };
 
@@ -79,12 +82,26 @@ const CreaPrenotazioneComponent = () => {
         setDataSelezionata("");
         setOrarioSelezionato("");
         setSelectedServizio("");
+        setSelectedIndirizzo("");
         setNote("");
         navigate("/prenotazioni");
         alert("Prenotazione confermata✅");
       })
       .catch((err) => setError(err.message));
   };
+
+  // Fetch per ottenere tutti gli indirizzi
+  useEffect(() => {
+    fetch("http://localhost:8080/indirizzi/all", {
+      headers: { Authorization: `Bearer ${jwtToken}` }
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error("Errore nel recupero degli indirizzi");
+        return response.json();
+      })
+      .then((data) => setIndirizzi(data))
+      .catch((err) => setError(err.message));
+  }, [jwtToken]);
 
   return (
     <Container>
@@ -134,6 +151,21 @@ const CreaPrenotazioneComponent = () => {
                     {servizi.map((servizio) => (
                       <option key={servizio.id} value={servizio.id}>
                         {servizio.nomeServizio} - Durata: {servizio.durata} minuti
+                      </option>
+                    ))}
+                  </Form.Select>
+                </Form.Group>
+
+                {/* indirizzi*/}
+                <Form.Group className="mb-3">
+                  <Form.Label>Seleziona un indirizzo</Form.Label>
+                  <Form.Select defaultValue="" onChange={(e) => setSelectedIndirizzo(e.target.value)} required>
+                    <option value="" disabled>
+                      Seleziona un indirizzo...
+                    </option>
+                    {indirizzi.map((indirizzo) => (
+                      <option key={indirizzo.id} value={indirizzo.id}>
+                        {`${indirizzo.via} ${indirizzo.numeroCivico}, ${indirizzo.citta} (${indirizzo.provincia})`}
                       </option>
                     ))}
                   </Form.Select>

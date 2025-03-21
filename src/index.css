@@ -130,14 +130,13 @@ h3 {
   box-shadow: 0px 0px 10px rgba(255, 140, 0, 0.2); /* Neon arancione dietro la descrizione */
 }
 
-/* Stili per il testo nella lista dettagli */
+/* testo nella lista dettagli */
 .dettagli-container ul li {
   font-size: 1.1rem;
   color: #e0e0e0;
   text-shadow: 0px 0px 5px rgba(255, 140, 0, 0.2);
 }
 
-/* Pulsante con effetto neon */
 .btn-primary {
   background: linear-gradient(45deg, #ff8c00, #ff4500);
   border: none;
@@ -208,7 +207,7 @@ h3 {
 
 /*------------- CHI SONO ------------*/
 .chi-sono-container {
-  max-width: 900px;
+  max-width: 1135px;
   margin: auto;
   padding: 40px 20px;
   background: linear-gradient(180deg, #121212 0%, #2e3338 100%);
@@ -247,6 +246,14 @@ ul li {
   .foto-profilo {
     margin-bottom: 20px;
   }
+}
+
+.icone-chiSono {
+  text-shadow: 0px 0px 10px rgba(255, 140, 0, 0.5);
+  margin-left: -2px;
+}
+.coppa {
+  margin-left: -3.2px;
 }
 
 /*------------- NAVBAR -------------*/
@@ -324,3 +331,5 @@ ul li {
 .nome-utente {
   color: #ff8c00;
 }
+
+/* ----------------- INDIRIZZO -------------*/

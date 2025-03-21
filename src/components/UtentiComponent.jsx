@@ -170,14 +170,17 @@ const UtentiComponent = () => {
 
   return (
     <Container className="my-5">
-      <h2 className="text-center mb-4">Lista Utenti</h2>
+      <div className="d-flex align-items-center justify-content-between mb-3">
+        <div></div>
+        <h2 className="mx-auto  mt-2">Lista Utenti </h2>
+        <div>
+          <Button className="btn-primary" style={{ marginLeft: "-133px" }} onClick={() => setShowRegisterModal(true)}>
+            <IoPersonAddOutline className="mb-1 me-2" /> Aggiungi Utente
+          </Button>
+        </div>
+      </div>
 
       {/* Bottone per aggiungere un nuovo utente */}
-      <div className="text-end mb-3">
-        <Button variant="success" onClick={() => setShowRegisterModal(true)}>
-          <IoPersonAddOutline className="mb-1 me-2" /> Aggiungi Utente
-        </Button>
-      </div>
 
       {loading && <Spinner animation="border" className="d-block mx-auto" />}
       {error && <Alert variant="danger">{error}</Alert>}
@@ -185,37 +188,39 @@ const UtentiComponent = () => {
       {!loading && utenti.length === 0 && <Alert variant="warning">Nessun utente trovato.</Alert>}
 
       {!loading && utenti.length > 0 && (
-        <Table striped bordered hover responsive="sm" variant="dark">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Nome</th>
-              <th>Cognome</th>
-              <th>Email</th>
-              <th>Data di nascita</th>
-              <th>Username</th>
-              <th>Ruolo</th>
-              <th>Azioni</th>
-            </tr>
-          </thead>
-          <tbody>
-            {utenti.map((utente, index) => (
-              <tr key={utente.id || index}>
-                <td>{index + 1}</td>
-                <td>{utente.nome}</td>
-                <td>{utente.cognome}</td>
-                <td>{utente.email}</td>
-                <td>{new Date(utente.dataDiNascita).toLocaleDateString("it-IT")}</td>
-                <td>{utente.username}</td>
-                <td>{utente.ruolo}</td>
-                <td className="text-center">
-                  <TfiPencilAlt className="icon-edit me-2 mt-1" style={{ cursor: "pointer", color: "orange" }} onClick={() => openEditModal(utente)} />
-                  <FaTrashAlt className="icon-delete ms-3 mt-1" style={{ cursor: "pointer", color: "red" }} onClick={() => handleDelete(utente.id)} />
-                </td>
+        <div className="table-responsive">
+          <Table striped bordered hover responsive="sm" variant="dark">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nome</th>
+                <th>Cognome</th>
+                <th>Email</th>
+                <th>Data di nascita</th>
+                <th>Username</th>
+                <th>Ruolo</th>
+                <th>Azioni</th>
               </tr>
-            ))}
-          </tbody>
-        </Table>
+            </thead>
+            <tbody>
+              {utenti.map((utente, index) => (
+                <tr key={utente.id || index}>
+                  <td>{index + 1}</td>
+                  <td>{utente.nome}</td>
+                  <td>{utente.cognome}</td>
+                  <td>{utente.email}</td>
+                  <td>{new Date(utente.dataDiNascita).toLocaleDateString("it-IT")}</td>
+                  <td>{utente.username}</td>
+                  <td>{utente.ruolo}</td>
+                  <td className="d-flex justify-content-center align-item-center">
+                    <TfiPencilAlt className="icon-edit me-2 mt-1" style={{ cursor: "pointer", color: "orange" }} onClick={() => openEditModal(utente)} />
+                    <FaTrashAlt className="icon-delete ms-3 mt-1" style={{ cursor: "pointer", color: "red" }} onClick={() => handleDelete(utente.id)} />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </div>
       )}
 
       {/* Modale per modificare utente */}
@@ -270,7 +275,7 @@ const UtentiComponent = () => {
             <Button variant="secondary" onClick={() => setShowModal(false)}>
               Chiudi
             </Button>
-            <Button variant="primary" onClick={handleEdit}>
+            <Button className="btn-primary" variant="primary" onClick={handleEdit}>
               Salva Modifiche
             </Button>
           </Modal.Footer>

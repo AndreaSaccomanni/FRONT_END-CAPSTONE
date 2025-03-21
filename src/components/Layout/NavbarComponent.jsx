@@ -9,8 +9,11 @@ const NavbarComponent = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem("jwtToken"));
   const userRole = localStorage.getItem("userRole");
 
+  const navigate = useNavigate();
+
   const isAdmin = userRole === "ADMIN" || userRole === "PERSONAL_TRAINER";
 
+  //controllo pwe vedere se l'utente si è autenticato in base alla presenza del token nel localStorage
   useEffect(() => {
     const handleStorageChange = () => {
       setIsAuthenticated(!!localStorage.getItem("jwtToken"));
@@ -23,14 +26,16 @@ const NavbarComponent = () => {
     };
   }, []);
 
-  const navigate = useNavigate();
-
+  //logout
   const handleLogout = () => {
     const confirmLogout = window.confirm("Sei sicuro di voler effettuare il logout?");
 
     if (confirmLogout) {
-      // Rimuove il token dal localStorage
+      // Rimuove i dati dal localStorage
       localStorage.removeItem("jwtToken");
+      localStorage.removeItem("userRole");
+      localStorage.removeItem("userId");
+      localStorage.removeItem("nomeUtente");
 
       // Reindirizza alla homepage
       navigate("/");
@@ -60,6 +65,9 @@ const NavbarComponent = () => {
             </Nav.Link>
             <Nav.Link as={Link} to="/chiSono" className="px-3">
               Chi sono
+            </Nav.Link>
+            <Nav.Link as={Link} to="/indirizzo" className="px-3">
+              Indirizzo
             </Nav.Link>
             <Nav.Link as={Link} to="/servizi" className="px-3">
               Servizi

@@ -14,23 +14,57 @@ const ChiSono = () => {
         {/* Colonna Testo */}
         <Col md={7}>
           <p>
-            Mi chiamo <strong>Alessandro Saccomanni</strong> e sono un <strong>Personal Trainer</strong> con una forte passione per il benessere fisico e
-            mentale. Il mio obiettivo è aiutarti a migliorare la tua forma fisica, aumentare le tue performance e raggiungere un equilibrio tra corpo e mente.
+            Mi chiamo <strong>Alessandro Saccomanni</strong>, sono un <strong>Chinesiologo Sportivo</strong> e <strong>Personal Trainer</strong>. Il mio
+            percorso di studi mi ha permesso di sviluppare un <strong>approccio olistico</strong> all’attività fisica che mi permette di adattarla alle{" "}
+            <strong>necessità individuali</strong> considerando anche gli <strong>aspetti psicologici</strong> dei clienti, che siano atleti, novizi o
+            appassionati. Il metodo che utilizzo è incentrato sul percorso da compiere <strong>insieme</strong> piuttosto che sulla meta da raggiungere, in modo
+            da poter instaurare fiducia e consapevolezza di sé nella persona che assisto. La mia passione per tutto ciò che riguarda il movimento umano stimola
+            la <strong>ricerca</strong> e l’<strong>aggiornamento</strong> costanti per garantirvi un servizio efficace e <strong>science-based</strong>.
           </p>
-          <h4 className="mt-4">📚 Percorso di studi</h4>
+          <h4 className="mt-4">
+            <span className="icone-chiSono">📚</span> Percorso di studi
+          </h4>
           <ul>
             <li>
-              🏋🏻‍♂️ Certificazione in Personal Training presso <strong>[Nome Istituto]</strong>
+              <div className="d-flex">
+                <span className="me-2"> 📖 </span>{" "}
+                <span>
+                  Laurea Triennale in Scienze motorie e Sportive presso
+                  <strong> Università degli studi di Roma “Foro Italico”</strong>
+                </span>
+              </div>
             </li>
-            <li>📖 Specializzazione in Allenamento Funzionale e Biomeccanica</li>
-            <li>🧘‍♂️ Corsi di aggiornamento su Massaggi Sportivi e Rilassanti</li>
+
+            <li>
+              <div className="d-flex">
+                <span className="me-2">🎓</span>{" "}
+                <span>
+                  Laurea magistrale in Scienza e tecnica dello Sport presso
+                  <strong> Università degli studi di Roma “Foro Italico”</strong>
+                </span>
+              </div>
+            </li>
+            <li>
+              <span className="me-2">🧘‍♂️</span>Massaggiatore sportivo CONI – <strong>Istituto ATS</strong>
+            </li>
           </ul>
 
-          <h4 className="mt-4">🏆 Esperienze</h4>
+          <h4 className="mt-4">
+            <span className="icone-chiSono coppa">🏆</span> Esperienze
+          </h4>
           <ul>
-            <li>✅ Esperienza pluriennale nell’allenamento individuale e di gruppo</li>
-            <li>✅ Collaborazione con centri fitness e palestre specializzate</li>
-            <li>✅ Trattamenti personalizzati per atleti e appassionati di fitness</li>
+            <li>
+              <span className="me-2">✅</span>Istruttore Ginnastica Posturale presso Sporting Village 2.0
+            </li>
+            <li>
+              <span className="me-2">✅</span>Istruttore attività motoria per l’età evolutiva
+            </li>
+            <li>
+              <span className="me-2">✅</span>Massaggiatore
+            </li>
+            <li>
+              <span className="me-2">✅</span>Trattamenti personalizzati per atleti e appassionati di fitness
+            </li>
           </ul>
 
           <p className="mt-4">

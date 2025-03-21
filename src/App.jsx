@@ -12,6 +12,8 @@ import ChiSono from "./components/ChiSono";
 import ServiceSection from "./components/ServiceSection";
 import CreaPrenotazioneComponent from "./components/CreaPrenotazioneComponent";
 import UtentiComponent from "./components/UtentiComponent";
+import IndirizzoComponent from "./components/IndirizzoComponent";
+import GestioneIndirizziComponent from "./components/GestioneIndirizziComponent";
 
 function App() {
   return (
@@ -28,6 +30,8 @@ function App() {
             <Route path="/servizi" element={<ServiceSection />} />
             <Route path="/creaprenotazione" element={<CreaPrenotazioneComponent />} />
             <Route path="/utenti" element={<UtentiComponent />} />
+            <Route path="/indirizzo" element={<IndirizzoComponent />} />
+            <Route path="/gestioneIndirizzi" element={<GestioneIndirizziComponent />} />
           </Routes>
         </div>
         <FooterComponent />

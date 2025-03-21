@@ -29,6 +29,16 @@ const FooterComponent = () => {
                 377 208 2714
               </a>
             </div>
+
+            <div className="d-flex align-items-center justify-content-center mt-2">
+              <span className="contact-icon">📍</span>
+              <a
+                href="https://www.google.it/maps/place/Via+Madonna+del+Prato,+5,+05023+Civitella+del+Lago+TR/@42.70992,12.2821916,17z/data=!3m1!4b1!4m6!3m5!1s0x132ec5a6b92837ab:0x8298fc95baaebbd7!8m2!3d42.7099167!4d12.2843569!16s%2Fg%2F11c5fxnxcf?entry=ttu&g_ep=EgoyMDI1MDMxNy4wIKXMDSoASAFQAw%3D%3D"
+                className="footer-link ms-2"
+              >
+                Via Madonna del Prato 5, Civitella del Lago (TR)
+              </a>
+            </div>
           </Col>
 
           {/* Colonna Link Utili */}
@@ -43,6 +53,11 @@ const FooterComponent = () => {
               <li>
                 <Link to="/servizi" className="footer-link">
                   Servizi
+                </Link>
+              </li>
+              <li>
+                <Link to="/indirizzo" className="footer-link">
+                  Indirizzo
                 </Link>
               </li>
             </ul>
