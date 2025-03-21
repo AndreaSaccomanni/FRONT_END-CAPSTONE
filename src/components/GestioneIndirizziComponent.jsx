@@ -14,10 +14,10 @@ const GestioneIndirizziComponent = () => {
     numeroCivico: "",
     citta: "",
     provincia: "",
+    nomeStudio: "",
     latitudine: null,
     longitudine: null
   });
-  //   const [newIndirizzo, setNewIndirizzo] = useState({ via: "", citta: "", cap: "", stato: "" });
 
   const jwtToken = localStorage.getItem("jwtToken");
 
@@ -123,6 +123,7 @@ const GestioneIndirizziComponent = () => {
                 <th>Numero Civico</th>
                 <th>Città</th>
                 <th>Provincia</th>
+                <th>Nome Studio</th>
                 <th>Azioni</th>
               </tr>
             </thead>
@@ -134,6 +135,7 @@ const GestioneIndirizziComponent = () => {
                   <td>{indirizzo.numeroCivico}</td>
                   <td>{indirizzo.citta}</td>
                   <td>{indirizzo.provincia}</td>
+                  <td>{indirizzo.nomeStudio}</td>
 
                   <td className="d-flex justify-content-center align-item-center">
                     <TfiPencilAlt className="icon-edit me-2 mt-1" style={{ cursor: "pointer", color: "orange" }} onClick={() => openEditModal(indirizzo)} />
@@ -169,7 +171,7 @@ const GestioneIndirizziComponent = () => {
                 <Form.Control
                   type="text"
                   value={selectedIndirizzo.numeroCivico}
-                  onChange={(e) => setSelectedIndirizzo({ ...selectedIndirizzo, numeroCivico: parseInt(e.target.value) })}
+                  onChange={(e) => setSelectedIndirizzo({ ...selectedIndirizzo, numeroCivico: e.target.value })}
                   required
                 />
               </Form.Group>
@@ -188,6 +190,34 @@ const GestioneIndirizziComponent = () => {
                   type="text"
                   value={selectedIndirizzo.provincia}
                   onChange={(e) => setSelectedIndirizzo({ ...selectedIndirizzo, provincia: e.target.value })}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group className="mt-3">
+                <Form.Label>Nome Studio</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={selectedIndirizzo.nomeStudio}
+                  onChange={(e) => setSelectedIndirizzo({ ...selectedIndirizzo, nomeStudio: e.target.value })}
+                  required
+                />
+              </Form.Group>
+              <Form.Group className="mt-3">
+                <Form.Label>Latitudine</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={selectedIndirizzo.latitudine}
+                  onChange={(e) => setSelectedIndirizzo({ ...selectedIndirizzo, latitudine: e.target.value })}
+                  required
+                />
+              </Form.Group>
+              <Form.Group className="mt-3">
+                <Form.Label>Longitudine</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={selectedIndirizzo.longitudine}
+                  onChange={(e) => setSelectedIndirizzo({ ...selectedIndirizzo, longitudine: e.target.value })}
                   required
                 />
               </Form.Group>
@@ -227,7 +257,7 @@ const GestioneIndirizziComponent = () => {
                 <Form.Control
                   type="text"
                   value={selectedIndirizzo.numeroCivico}
-                  onChange={(e) => setSelectedIndirizzo({ ...selectedIndirizzo, numeroCivico: parseInt(e.target.value) })}
+                  onChange={(e) => setSelectedIndirizzo({ ...selectedIndirizzo, numeroCivico: e.target.value })}
                   required
                 />
               </Form.Group>
@@ -249,6 +279,32 @@ const GestioneIndirizziComponent = () => {
                   value={selectedIndirizzo.provincia}
                   onChange={(e) => setSelectedIndirizzo({ ...selectedIndirizzo, provincia: e.target.value })}
                   required
+                />
+              </Form.Group>
+              <Form.Group className="mt-3">
+                <Form.Label>Nome Studio</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={selectedIndirizzo.nomeStudio}
+                  onChange={(e) => setSelectedIndirizzo({ ...selectedIndirizzo, nomeStudio: e.target.value })}
+                  required
+                />
+              </Form.Group>
+              <Form.Group className="mt-3">
+                <Form.Label>Latitudine</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={selectedIndirizzo.latitudine || ""}
+                  onChange={(e) => setSelectedIndirizzo({ ...selectedIndirizzo, latitudine: parseFloat(e.target.value) })}
+                />
+              </Form.Group>
+
+              <Form.Group className="mt-3">
+                <Form.Label>Longitudine</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={selectedIndirizzo.longitudine || ""}
+                  onChange={(e) => setSelectedIndirizzo({ ...selectedIndirizzo, longitudine: parseFloat(e.target.value) })}
                 />
               </Form.Group>
             </Form>

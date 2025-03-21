@@ -67,7 +67,7 @@ const NavbarComponent = () => {
               Chi sono
             </Nav.Link>
             <Nav.Link as={Link} to="/indirizzo" className="px-3">
-              Indirizzo
+              Indirizzi
             </Nav.Link>
             <Nav.Link as={Link} to="/servizi" className="px-3">
               Servizi

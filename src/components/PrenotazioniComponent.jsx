@@ -262,7 +262,7 @@ const PrenotazioniComponent = () => {
               >
                 {indirizzi.map((indirizzo, index) => (
                   <option key={indirizzo.id || index} value={indirizzo.id}>
-                    {`${indirizzo.via} ${indirizzo.numeroCivico}, ${indirizzo.citta} (${indirizzo.provincia})`}
+                    {`${indirizzo.via} ${indirizzo.numeroCivico}, ${indirizzo.citta} (${indirizzo.provincia}) - ${indirizzo.nomeStudio}`}
                   </option>
                 ))}
               </Form.Select>
