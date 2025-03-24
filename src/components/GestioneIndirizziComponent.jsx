@@ -20,6 +20,8 @@ const GestioneIndirizziComponent = () => {
   });
 
   const jwtToken = localStorage.getItem("jwtToken");
+  const [luogo, setLuogo] = useState(null);
+  const [luogoTrovato, setLuogoTrovato] = useState(null);
 
   // Fetch per ottenere tutti gli indirizzi
   useEffect(() => {
@@ -43,7 +45,8 @@ const GestioneIndirizziComponent = () => {
 
   //modale per aggiunta
   const openAddModal = () => {
-    setSelectedIndirizzo({ via: "", numeroCivico: "", citta: "", provincia: "" });
+    setLuogo("");
+    setLuogoTrovato("");
     setShowAddModal(true);
   };
 
@@ -80,6 +83,8 @@ const GestioneIndirizziComponent = () => {
       .then((data) => {
         setIndirizzi([...indirizzi, data]);
         setShowAddModal(false);
+        setLuogo("");
+        setLuogoTrovato("");
       })
       .catch((err) => setError(err.message));
   };
@@ -96,6 +101,41 @@ const GestioneIndirizziComponent = () => {
         setIndirizzi(indirizzi.filter((ind) => ind.id !== id));
       })
       .catch((err) => setError(err.message));
+  };
+
+  const searchPlace = () => {
+    const service = new window.google.maps.places.PlacesService(document.createElement("div"));
+    const request = {
+      query: luogo,
+      fields: ["formatted_address", "geometry", "place_id"]
+    };
+    service.findPlaceFromQuery(request, (results, status) => {
+      if (status === "OK" && results.length > 0) {
+        console.log(status);
+        setLuogoTrovato(results[0].formatted_address);
+        const lat = results[0].geometry.location.lat();
+        const lng = results[0].geometry.location.lng();
+        selectedIndirizzo.latitudine = lat;
+        selectedIndirizzo.longitudine = lng;
+
+        const geocoder = new window.google.maps.Geocoder();
+        const latlng = { lat, lng };
+
+        geocoder.geocode({ location: latlng }, (res, geoStatus) => {
+          if (geoStatus === "OK" && res.length > 0) {
+            const components = res[0].address_components;
+
+            const getComp = (type, useShort = false) => components.find((c) => c.types.includes(type))?.[useShort ? "short_name" : "long_name"] || "";
+
+            // Popola i dati separati
+            selectedIndirizzo.via = getComp("route");
+            selectedIndirizzo.numeroCivico = getComp("street_number");
+            selectedIndirizzo.citta = getComp("locality") || getComp("postal_town") || getComp("administrative_area_level_3");
+            selectedIndirizzo.provincia = getComp("administrative_area_level_2", true);
+          }
+        });
+      }
+    });
   };
 
   return (
@@ -203,7 +243,7 @@ const GestioneIndirizziComponent = () => {
                   required
                 />
               </Form.Group>
-              <Form.Group className="mt-3">
+              {/* <Form.Group className="mt-3">
                 <Form.Label>Latitudine</Form.Label>
                 <Form.Control
                   type="text"
@@ -220,6 +260,23 @@ const GestioneIndirizziComponent = () => {
                   onChange={(e) => setSelectedIndirizzo({ ...selectedIndirizzo, longitudine: e.target.value })}
                   required
                 />
+              </Form.Group> */}
+              <Form.Group className="mt-3">
+                <Form.Label>Modifica luogo</Form.Label>
+                <Form.Control
+                  type="text"
+                  id="input-indirizzo"
+                  name="indirizzo"
+                  placeholder="Inserisci il nuovo luogo"
+                  value={luogo || ""}
+                  onChange={(e) => {
+                    setLuogo(e.target.value);
+                    searchPlace(e);
+                  }}
+                />
+              </Form.Group>
+              <Form.Group className="mt-3">
+                <Form.Control type="text" id="indirizzo-trovato" name="indirizzoTrovato" disabled value={luogoTrovato || ""} />
               </Form.Group>
             </Form>
           </Modal.Body>
@@ -242,7 +299,7 @@ const GestioneIndirizziComponent = () => {
           </Modal.Header>
           <Modal.Body className="bg-dark text-light">
             <Form>
-              <Form.Group>
+              {/* <Form.Group>
                 <Form.Label>Via</Form.Label>
                 <Form.Control
                   type="text"
@@ -280,6 +337,29 @@ const GestioneIndirizziComponent = () => {
                   onChange={(e) => setSelectedIndirizzo({ ...selectedIndirizzo, provincia: e.target.value })}
                   required
                 />
+              </Form.Group> */}
+
+              <Form.Group className="mt-3">
+                <Form.Label>Inserisci luogo</Form.Label>
+                <Form.Control
+                  type="text"
+                  id="input-indirizzo"
+                  name="indirizzo"
+                  placeholder="Inserisci un luogo"
+                  value={luogo || ""}
+                  onChange={(e) => {
+                    console.log(luogo);
+
+                    setLuogo(e.target.value);
+                  }}
+                  onKeyUp={(e) => {
+                    searchPlace(e);
+                  }}
+                />
+              </Form.Group>
+
+              <Form.Group className="mt-3">
+                <Form.Control type="text" id="indirizzo-trovato" name="indirizzoTrovato" disabled value={luogoTrovato || ""} />
               </Form.Group>
               <Form.Group className="mt-3">
                 <Form.Label>Nome Studio</Form.Label>
@@ -288,23 +368,6 @@ const GestioneIndirizziComponent = () => {
                   value={selectedIndirizzo.nomeStudio}
                   onChange={(e) => setSelectedIndirizzo({ ...selectedIndirizzo, nomeStudio: e.target.value })}
                   required
-                />
-              </Form.Group>
-              <Form.Group className="mt-3">
-                <Form.Label>Latitudine</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={selectedIndirizzo.latitudine || ""}
-                  onChange={(e) => setSelectedIndirizzo({ ...selectedIndirizzo, latitudine: parseFloat(e.target.value) })}
-                />
-              </Form.Group>
-
-              <Form.Group className="mt-3">
-                <Form.Label>Longitudine</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={selectedIndirizzo.longitudine || ""}
-                  onChange={(e) => setSelectedIndirizzo({ ...selectedIndirizzo, longitudine: parseFloat(e.target.value) })}
                 />
               </Form.Group>
             </Form>

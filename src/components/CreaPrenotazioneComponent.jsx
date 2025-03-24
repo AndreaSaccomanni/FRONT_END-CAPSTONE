@@ -14,8 +14,11 @@ const CreaPrenotazioneComponent = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [indirizzi, setIndirizzi] = useState([]);
   const [selectedIndirizzo, setSelectedIndirizzo] = useState("");
+  const [utenti, setUtenti] = useState([]);
+  const [selectedUtente, setSelectedUtente] = useState("");
 
   const navigate = useNavigate();
+  const userRole = localStorage.getItem("userRole");
   const jwtToken = localStorage.getItem("jwtToken");
 
   // Fetch per ottenere i servizi disponibili
@@ -55,6 +58,7 @@ const CreaPrenotazioneComponent = () => {
     const dataOraPrenotazione = `${dataSelezionata}T${orarioSelezionato}:00`; // Formato ISO
 
     const prenotazioneDTO = {
+      utenteId: selectedUtente,
       servizioId: selectedServizio,
       dataOraPrenotazione,
       indirizzoId: selectedIndirizzo,
@@ -103,6 +107,25 @@ const CreaPrenotazioneComponent = () => {
       .catch((err) => setError(err.message));
   }, [jwtToken]);
 
+  // Fetch per ottenere tutti gli utenti
+  useEffect(() => {
+    fetch("http://localhost:8080/utenti/all", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${jwtToken}`
+      }
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Errore nella fetch: ${response.status} - ${response.statusText}`);
+        }
+        return response.json();
+      })
+      .then((data) => setUtenti(data))
+      .catch((err) => setError(err.message));
+  }, [jwtToken]);
+
   return (
     <Container>
       <Row className="justify-content-md-center">
@@ -141,10 +164,26 @@ const CreaPrenotazioneComponent = () => {
                   <Form.Control type="date" value={dataSelezionata} onChange={(e) => setDataSelezionata(e.target.value)} required />
                 </Form.Group>
 
+                {userRole == "ADMIN" || userRole == "PERSONAL_TRAINER" ? (
+                  <Form.Group className="mb-3">
+                    <Form.Label>Seleziona un utente</Form.Label>
+                    <Form.Select defaultValue="" onChange={(e) => setSelectedUtente(e.target.value)} required>
+                      <option value="" disabled>
+                        Seleziona un utente...
+                      </option>
+                      {utenti.map((utente) => (
+                        <option key={utente.id} value={utente.id}>
+                          {`${utente.nome} ${utente.cognome}`}
+                        </option>
+                      ))}
+                    </Form.Select>
+                  </Form.Group>
+                ) : null}
+
                 {/* servizi*/}
                 <Form.Group className="mb-3">
                   <Form.Label>Seleziona un Servizio</Form.Label>
-                  <Form.Select defaultValue="" onChange={(e) => setSelectedServizio(e.target.value)} required>
+                  <Form.Select className="w-100" defaultValue="" onChange={(e) => setSelectedServizio(e.target.value)} required>
                     <option value="" disabled>
                       Seleziona un servizio...
                     </option>
@@ -165,7 +204,7 @@ const CreaPrenotazioneComponent = () => {
                     </option>
                     {indirizzi.map((indirizzo) => (
                       <option key={indirizzo.id} value={indirizzo.id}>
-                        {`${indirizzo.via} ${indirizzo.numeroCivico}, ${indirizzo.citta} (${indirizzo.provincia})`}
+                        {`${indirizzo.via} ${indirizzo.numeroCivico}, ${indirizzo.citta} (${indirizzo.provincia}) - ${indirizzo.nomeStudio}`}
                       </option>
                     ))}
                   </Form.Select>
