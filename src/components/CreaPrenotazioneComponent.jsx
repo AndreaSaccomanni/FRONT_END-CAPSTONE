@@ -16,6 +16,7 @@ const CreaPrenotazioneComponent = () => {
   const [selectedIndirizzo, setSelectedIndirizzo] = useState("");
   const [utenti, setUtenti] = useState([]);
   const [selectedUtente, setSelectedUtente] = useState("");
+  const [indirizziFiltrati, setIndirizziFiltrati] = useState([]);
 
   const navigate = useNavigate();
   const userRole = localStorage.getItem("userRole");
@@ -109,22 +110,45 @@ const CreaPrenotazioneComponent = () => {
 
   // Fetch per ottenere tutti gli utenti
   useEffect(() => {
-    fetch("http://localhost:8080/utenti/all", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${jwtToken}`
-      }
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`Errore nella fetch: ${response.status} - ${response.statusText}`);
+    if (userRole === "ADMIN" || userRole === "PERSONAL_TRAINER") {
+      fetch("http://localhost:8080/utenti/all", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${jwtToken}`
         }
-        return response.json();
       })
-      .then((data) => setUtenti(data))
-      .catch((err) => setError(err.message));
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`Errore nella fetch: ${response.status} - ${response.statusText}`);
+          }
+          return response.json();
+        })
+        .then((data) => setUtenti(data))
+        .catch((err) => setError(err.message));
+    }
   }, [jwtToken]);
+
+  //per filtrare gli indirizi disponibili in base aaal giorno --> lunedi- martedì SPORTING VILLAGE, mercoledì-giovedì VERTICAL, venerdì-sabato STUDIO PRIVATO
+  useEffect(() => {
+    if (!dataSelezionata) return;
+
+    const giornoSettimana = new Date(dataSelezionata).getDay(); // 0 = Domenica, 1 = Lunedì, 2 = Martedì ecc.
+    let indirizziValidi = [];
+
+    if (giornoSettimana === 1 || giornoSettimana === 2) {
+      indirizziValidi = indirizzi.filter((indirizzo) => indirizzo.id === 7); // 7/9/11 id degli indirizzi presi dal db
+    } else if (giornoSettimana === 3 || giornoSettimana === 4) {
+      indirizziValidi = indirizzi.filter((indirizzo) => indirizzo.id === 9);
+    } else if (giornoSettimana === 5 || giornoSettimana === 6) {
+      indirizziValidi = indirizzi.filter((indirizzo) => indirizzo.id === 11);
+    } else {
+      indirizziValidi = []; // Domenica
+    }
+
+    setIndirizziFiltrati(indirizziValidi);
+    setSelectedIndirizzo(""); // reset selezione
+  }, [dataSelezionata, indirizzi]);
 
   return (
     <Container>
@@ -200,9 +224,9 @@ const CreaPrenotazioneComponent = () => {
                   <Form.Label>Seleziona un indirizzo</Form.Label>
                   <Form.Select defaultValue="" onChange={(e) => setSelectedIndirizzo(e.target.value)} required>
                     <option value="" disabled>
-                      Seleziona un indirizzo...
+                      Indirizzo disponibile per la data selezionata...
                     </option>
-                    {indirizzi.map((indirizzo) => (
+                    {indirizziFiltrati.map((indirizzo) => (
                       <option key={indirizzo.id} value={indirizzo.id}>
                         {`${indirizzo.via} ${indirizzo.numeroCivico}, ${indirizzo.citta} (${indirizzo.provincia}) - ${indirizzo.nomeStudio}`}
                       </option>
@@ -249,7 +273,7 @@ const CreaPrenotazioneComponent = () => {
                   <Form.Control as="textarea" rows={3} value={note} onChange={(e) => setNote(e.target.value)} placeholder="Inserisci eventuali note..." />
                 </Form.Group>
 
-                <div className="d-flex justify-content-center mt-4">
+                <div className="d-flex justify-content-center my-4">
                   <Button variant="primary" type="submit">
                     Crea Prenotazione
                   </Button>

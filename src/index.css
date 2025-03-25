@@ -315,7 +315,7 @@ ul li {
   text-align: center;
 }
 
-/*-------------ICONA EKIMINA ORENOTAZIONE ---------------*/
+/*-------------ICONA EKIMINA PRENOTAZIONE ---------------*/
 .icon-delete {
   color: red;
   cursor: pointer;
@@ -340,6 +340,5 @@ ul li {
 }
 
 .icona-mappa:hover {
-  box-shadow: 0px 0px 15px rgba(255, 140, 0, 0.8);
-  transform: scale(1.05);
+  transform: scale(1.3);
 }

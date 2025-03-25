@@ -9,6 +9,8 @@ const GestioneIndirizziComponent = () => {
   const [error, setError] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
+  // const giorniSettimana = ["Lunedi ", "Martedi ", "Mercoledi ", "Giovedi ", "Venerdi ", "Sabato "];
+  // const [giorniAssegnati, setGiorniAssegnati] = useState([]);
   const [selectedIndirizzo, setSelectedIndirizzo] = useState({
     via: "",
     numeroCivico: "",
@@ -16,7 +18,8 @@ const GestioneIndirizziComponent = () => {
     provincia: "",
     nomeStudio: "",
     latitudine: null,
-    longitudine: null
+    longitudine: null,
+    giorniDisponibili: []
   });
 
   const jwtToken = localStorage.getItem("jwtToken");
@@ -32,7 +35,12 @@ const GestioneIndirizziComponent = () => {
         if (!response.ok) throw new Error("Errore nel recupero degli indirizzi");
         return response.json();
       })
-      .then((data) => setIndirizzi(data))
+      .then((data) => {
+        setIndirizzi(data);
+        //const giorniOccupati = data.flatMap((indirizzo) => indirizzo.giorniDisponibili || []);
+        // setGiorniAssegnati(giorniOccupati);
+      })
+
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
   }, [jwtToken]);
@@ -92,17 +100,38 @@ const GestioneIndirizziComponent = () => {
   // Eliminare un indirizzo
   const handleDelete = (id) => {
     if (!window.confirm("Sei sicuro di voler eliminare questo indirizzo?")) return;
-    fetch(`http://localhost:8080/indirizzi/delete/${id}`, {
-      method: "DELETE",
+
+    // controllo per vedere se ci sono prenotazioni collegate
+    fetch(`http://localhost:8080/prenotazioni/indirizzo/${id}`, {
       headers: { Authorization: `Bearer ${jwtToken}` }
     })
-      .then((response) => {
-        if (!response.ok) throw new Error("Errore nella cancellazione dell'indirizzo");
-        setIndirizzi(indirizzi.filter((ind) => ind.id !== id));
+      .then((res) => {
+        if (!res.ok) throw new Error("Errore nel controllo prenotazioni collegate");
+        return res.json();
+      })
+      .then((prenotazioni) => {
+        if (prenotazioni.length > 0) {
+          // aleert per conferma di eliminazione se ci sono prenotazioni collegate all'indirizzo
+          const conferma = window.confirm("Ci sono prenotazioni per quell'indirizzo. Eliminare comunque?\nTutte le prenotazioni andranno perse.");
+          if (!conferma) return;
+        }
+
+        //cancellazione indirizzo
+        return fetch(`http://localhost:8080/indirizzi/delete/${id}`, {
+          method: "DELETE",
+          headers: { Authorization: `Bearer ${jwtToken}` }
+        });
+      })
+      .then((res) => {
+        if (res && !res.ok) throw new Error("Errore nella cancellazione dell'indirizzo");
+
+        // Rimozione indirizzo da lista indirizzi
+        setIndirizzi((prev) => prev.filter((ind) => ind.id !== id));
       })
       .catch((err) => setError(err.message));
   };
 
+  //funzione per cercare indirizzi tramite google
   const searchPlace = () => {
     const service = new window.google.maps.places.PlacesService(document.createElement("div"));
     const request = {
@@ -138,6 +167,13 @@ const GestioneIndirizziComponent = () => {
     });
   };
 
+  // const toggleGiornoDisponibile = (giorno) => {
+  //   const currentDays = selectedIndirizzo.giorniDisponibili || [];
+  //   const aggiornati = currentDays.includes(giorno) ? currentDays.filter((g) => g !== giorno) : [...currentDays, giorno];
+
+  //   setSelectedIndirizzo({ ...selectedIndirizzo, giorniDisponibili: aggiornati });
+  // };
+
   return (
     <Container className="my-5">
       <div className="d-flex align-items-center justify-content-between mb-3">
@@ -164,6 +200,7 @@ const GestioneIndirizziComponent = () => {
                 <th>Città</th>
                 <th>Provincia</th>
                 <th>Nome Studio</th>
+                {/* <th>Giorni Disponibili</th> */}
                 <th>Azioni</th>
               </tr>
             </thead>
@@ -176,6 +213,7 @@ const GestioneIndirizziComponent = () => {
                   <td>{indirizzo.citta}</td>
                   <td>{indirizzo.provincia}</td>
                   <td>{indirizzo.nomeStudio}</td>
+                  {/* <td>{indirizzo.giorniDisponibili}</td> */}
 
                   <td className="d-flex justify-content-center align-item-center">
                     <TfiPencilAlt className="icon-edit me-2 mt-1" style={{ cursor: "pointer", color: "orange" }} onClick={() => openEditModal(indirizzo)} />
@@ -243,24 +281,21 @@ const GestioneIndirizziComponent = () => {
                   required
                 />
               </Form.Group>
+
               {/* <Form.Group className="mt-3">
-                <Form.Label>Latitudine</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={selectedIndirizzo.latitudine}
-                  onChange={(e) => setSelectedIndirizzo({ ...selectedIndirizzo, latitudine: e.target.value })}
-                  required
-                />
-              </Form.Group>
-              <Form.Group className="mt-3">
-                <Form.Label>Longitudine</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={selectedIndirizzo.longitudine}
-                  onChange={(e) => setSelectedIndirizzo({ ...selectedIndirizzo, longitudine: e.target.value })}
-                  required
-                />
+                <Form.Label>Giorni disponibili</Form.Label>
+                {giorniSettimana.map((giorno) => (
+                  <Form.Check
+                    key={giorno}
+                    type="checkbox"
+                    label={giorno}
+                    value={giorno}
+                    checked={(selectedIndirizzo.giorniDisponibili || []).includes(giorno)}
+                    onChange={() => toggleGiornoDisponibile(giorno)}
+                  />
+                ))}
               </Form.Group> */}
+
               <Form.Group className="mt-3">
                 <Form.Label>Modifica luogo</Form.Label>
                 <Form.Control
@@ -299,46 +334,6 @@ const GestioneIndirizziComponent = () => {
           </Modal.Header>
           <Modal.Body className="bg-dark text-light">
             <Form>
-              {/* <Form.Group>
-                <Form.Label>Via</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={selectedIndirizzo.via}
-                  onChange={(e) => setSelectedIndirizzo({ ...selectedIndirizzo, via: e.target.value })}
-                  required
-                />
-              </Form.Group>
-
-              <Form.Group>
-                <Form.Label>Numero civico</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={selectedIndirizzo.numeroCivico}
-                  onChange={(e) => setSelectedIndirizzo({ ...selectedIndirizzo, numeroCivico: e.target.value })}
-                  required
-                />
-              </Form.Group>
-
-              <Form.Group className="mt-3">
-                <Form.Label>Città</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={selectedIndirizzo.citta}
-                  onChange={(e) => setSelectedIndirizzo({ ...selectedIndirizzo, citta: e.target.value })}
-                  required
-                />
-              </Form.Group>
-
-              <Form.Group className="mt-3">
-                <Form.Label>Provincia</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={selectedIndirizzo.provincia}
-                  onChange={(e) => setSelectedIndirizzo({ ...selectedIndirizzo, provincia: e.target.value })}
-                  required
-                />
-              </Form.Group> */}
-
               <Form.Group className="mt-3">
                 <Form.Label>Inserisci luogo</Form.Label>
                 <Form.Control
@@ -370,6 +365,21 @@ const GestioneIndirizziComponent = () => {
                   required
                 />
               </Form.Group>
+
+              {/* <Form.Group className="mt-3">
+                <Form.Label>Giorni disponibili</Form.Label>
+                {giorniSettimana.map((giorno) => (
+                  <Form.Check
+                    key={giorno}
+                    type="checkbox"
+                    label={giorno}
+                    value={giorno}
+                    disabled={giorniAssegnati.includes(giorno)} // disabilita se già assegnato altrove
+                    checked={(selectedIndirizzo.giorniDisponibili || []).includes(giorno)}
+                    onChange={() => toggleGiornoDisponibile(giorno)}
+                  />
+                ))}
+              </Form.Group> */}
             </Form>
           </Modal.Body>
           <Modal.Footer className="bg-dark text-light">

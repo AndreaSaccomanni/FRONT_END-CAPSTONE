@@ -57,7 +57,7 @@ const FooterComponent = () => {
               </li>
               <li>
                 <Link to="/indirizzo" className="footer-link">
-                  Indirizzo
+                  Indirizzi
                 </Link>
               </li>
             </ul>

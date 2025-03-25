@@ -258,7 +258,7 @@ const PrenotazioniComponent = () => {
               <Form.Label>Nuovo Indirizzo</Form.Label>
               <Form.Select
                 value={selectedPrenotazione.indirizzoId}
-                onChange={(e) => setSelectedPrenotazione({ ...selectedPrenotazione, indirizzoId: parseInt(e.target.value) })}
+                onChange={(e) => setSelectedPrenotazione({ ...selectedPrenotazione, indirizzoId: e.target.value })}
               >
                 {indirizzi.map((indirizzo, index) => (
                   <option key={indirizzo.id || index} value={indirizzo.id}>

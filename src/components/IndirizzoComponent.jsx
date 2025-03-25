@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Alert, Button, Container, Spinner } from "react-bootstrap";
+import { Alert, Button, Container, Spinner, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { TbMapSearch } from "react-icons/tb";
 
@@ -32,7 +32,8 @@ const IndirizzoComponent = () => {
 
   return (
     <Container className="mt-4 text-center">
-      <h2 className="text-center">Tutti gli studi</h2>
+      <h2 className="text-center link-arancione">Tutti gli Indirizzi</h2>
+      <h3 className="mb-4">Qui puoi trovare tutti gli indirizzi e gli studi in cui lavoro, con le relative indicazioni stradali</h3>
 
       {loading && <Spinner animation="border" className="d-block mx-auto" />}
       {error && <Alert variant="danger">{error}</Alert>}
@@ -45,18 +46,45 @@ const IndirizzoComponent = () => {
         )}
       </div>
 
+      {/* {!loading && indirizzi.length > 0 && (
+        <Table striped bordered hover responsive="sm" variant="dark">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nome Studio</th>
+              <th>Indirizzo</th>
+              <th>Giorni Disponibili</th>
+            </tr>
+          </thead>
+          <tbody>
+            {indirizzi.map((indirizzo, index) => (
+              <tr key={indirizzo.id || index}>
+                <td>{index + 1}</td>
+                <td>{indirizzo.nomeStudio}</td>
+                <td>{`${indirizzo.citta}, ${indirizzo.via} ${indirizzo.numeroCivico} (${indirizzo.provincia})`}</td>
+                <td>
+                  {indirizzo.giorniDisponibili && indirizzo.giorniDisponibili.length > 0 ? indirizzo.giorniDisponibili.join(", ") : "Nessun giorno assegnato"}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      )} */}
+
       {!loading &&
         indirizzi.map((indirizzo) => (
           <div key={indirizzo.id} className="mb-5">
-            <div className="d-flex align-items-center">
-              <div>
-                <h4 className="mb-2 text-start">{indirizzo.nomeStudio}</h4>
-                <p className="mb-3 text-start">
-                  {indirizzo.via} {indirizzo.numeroCivico}, {indirizzo.citta} ({indirizzo.provincia})
-                </p>
-              </div>
-              <div className="display-1">
-                <TbMapSearch className="mb-4 ms-5 icona-mappa" onClick={() => toggleMap(indirizzo.id)} />
+            <div className="">
+              <div className="d-flex align-items-center">
+                <div>
+                  <h4 className="mb-2 text-start link-arancione">{indirizzo.nomeStudio}</h4>
+                  <p className="mb-3 text-start">
+                    {indirizzo.via} {indirizzo.numeroCivico}, {indirizzo.citta} ({indirizzo.provincia})
+                  </p>
+                </div>
+                <div className="display-1">
+                  <TbMapSearch className="mb-4 ms-5 icona-mappa" onClick={() => toggleMap(indirizzo.id)} />
+                </div>
               </div>
             </div>
             {showMap === indirizzo.id && (
