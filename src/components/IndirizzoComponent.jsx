@@ -46,14 +46,14 @@ const IndirizzoComponent = () => {
         )}
       </div>
 
-      {/* {!loading && indirizzi.length > 0 && (
+      {!loading && indirizzi.length > 0 && (
         <Table striped bordered hover responsive="sm" variant="dark">
           <thead>
             <tr>
               <th>#</th>
               <th>Nome Studio</th>
               <th>Indirizzo</th>
-              <th>Giorni Disponibili</th>
+              <th>Giorni Disponibili per Prenotare</th>
             </tr>
           </thead>
           <tbody>
@@ -69,7 +69,7 @@ const IndirizzoComponent = () => {
             ))}
           </tbody>
         </Table>
-      )} */}
+      )}
 
       {!loading &&
         indirizzi.map((indirizzo) => (

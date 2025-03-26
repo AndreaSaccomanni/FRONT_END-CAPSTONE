@@ -9,8 +9,10 @@ const GestioneIndirizziComponent = () => {
   const [error, setError] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showAddModal, setShowAddModal] = useState(false);
-  // const giorniSettimana = ["Lunedi ", "Martedi ", "Mercoledi ", "Giovedi ", "Venerdi ", "Sabato "];
-  // const [giorniAssegnati, setGiorniAssegnati] = useState([]);
+  const giorniSettimana = ["LUNEDI", "MARTEDI", "MERCOLEDI", "GIOVEDI", "VENERDI", "SABATO"];
+  const [giorniAssegnati, setGiorniAssegnati] = useState([]);
+  const [erroreNoGiorniDisponibili, setErroreNoGiorniDisponibili] = useState("");
+
   const [selectedIndirizzo, setSelectedIndirizzo] = useState({
     via: "",
     numeroCivico: "",
@@ -21,6 +23,19 @@ const GestioneIndirizziComponent = () => {
     longitudine: null,
     giorniDisponibili: []
   });
+
+  const resetSelectedIndirizzo = () => {
+    setSelectedIndirizzo({
+      via: "",
+      numeroCivico: "",
+      citta: "",
+      provincia: "",
+      nomeStudio: "",
+      latitudine: null,
+      longitudine: null,
+      giorniDisponibili: []
+    });
+  };
 
   const jwtToken = localStorage.getItem("jwtToken");
   const [luogo, setLuogo] = useState(null);
@@ -37,8 +52,10 @@ const GestioneIndirizziComponent = () => {
       })
       .then((data) => {
         setIndirizzi(data);
-        //const giorniOccupati = data.flatMap((indirizzo) => indirizzo.giorniDisponibili || []);
-        // setGiorniAssegnati(giorniOccupati);
+        //ricavo un array che contiene tutti i giorni occupati di ogni indirizzo -> ogni indirizzo avrebbe un array di giorni assegnati
+        //con flatMap --> ricavo tutti gli array di indirizzo.giorniDisponibili e li unisco tutti i n un unico array ceh conterrà quindi tutti i giorni occpuati
+        const giorniOccupati = data.flatMap((indirizzo) => indirizzo.giorniDisponibili || []);
+        setGiorniAssegnati(giorniOccupati);
       })
 
       .catch((err) => setError(err.message))
@@ -53,6 +70,7 @@ const GestioneIndirizziComponent = () => {
 
   //modale per aggiunta
   const openAddModal = () => {
+    resetSelectedIndirizzo();
     setLuogo("");
     setLuogoTrovato("");
     setShowAddModal(true);
@@ -71,8 +89,13 @@ const GestioneIndirizziComponent = () => {
       })
       .then((data) => {
         //per modificare solamente quello selezionato --> mappa tra tutti gli indirizzi e trova corrispondenza con l'id
-        setIndirizzi((prev) => prev.map((ind) => (ind.id === selectedIndirizzo.id ? data : ind)));
+        setIndirizzi((indirizziAttuali) => indirizziAttuali.map((indirizzo) => (indirizzo.id === selectedIndirizzo.id ? data : indirizzo)));
         setShowEditModal(false);
+
+        const nuoviGiorniOccpuatiDopoModifica = [...indirizzi.map((indirizzo) => (indirizzo.id === data.id ? data : indirizzo))].flatMap(
+          (indirizzo) => indirizzo.giorniDisponibili || []
+        );
+        setGiorniAssegnati(nuoviGiorniOccpuatiDopoModifica);
       })
       .catch((err) => setError(err.message));
   };
@@ -89,10 +112,14 @@ const GestioneIndirizziComponent = () => {
         return response.json();
       })
       .then((data) => {
-        setIndirizzi([...indirizzi, data]);
+        //aggiungo il nuovo indirizzo alla lista degli indirizzi
+        const nuovaListaIndirizzi = [...indirizzi, data];
+        setIndirizzi(nuovaListaIndirizzi);
         setShowAddModal(false);
         setLuogo("");
         setLuogoTrovato("");
+        const nuoviGiorniAssegnatiDopoAggiunta = nuovaListaIndirizzi.flatMap((indirizzo) => indirizzo.giorniDisponibili || []);
+        setGiorniAssegnati(nuoviGiorniAssegnatiDopoAggiunta);
       })
       .catch((err) => setError(err.message));
   };
@@ -126,7 +153,7 @@ const GestioneIndirizziComponent = () => {
         if (res && !res.ok) throw new Error("Errore nella cancellazione dell'indirizzo");
 
         // Rimozione indirizzo da lista indirizzi
-        setIndirizzi((prev) => prev.filter((ind) => ind.id !== id));
+        setIndirizzi((indirizziAttuali) => indirizziAttuali.filter((ind) => ind.id !== id));
       })
       .catch((err) => setError(err.message));
   };
@@ -167,19 +194,36 @@ const GestioneIndirizziComponent = () => {
     });
   };
 
-  // const toggleGiornoDisponibile = (giorno) => {
-  //   const currentDays = selectedIndirizzo.giorniDisponibili || [];
-  //   const aggiornati = currentDays.includes(giorno) ? currentDays.filter((g) => g !== giorno) : [...currentDays, giorno];
-
-  //   setSelectedIndirizzo({ ...selectedIndirizzo, giorniDisponibili: aggiornati });
-  // };
+  const toggleGiornoDisponibile = (giornoCliccato) => {
+    //ricavo i giorni disponbili per prendere appuntamento dell'indirizzo selezionato
+    const giorniDisponibili = selectedIndirizzo.giorniDisponibili || [];
+    //se nei giorni disponibili è presente il giorno che ho selezionato ,
+    const giorniAggiornati = giorniDisponibili.includes(giornoCliccato)
+      ? giorniDisponibili.filter((g) => g !== giornoCliccato) //lo rimuovo perchè era gia checkato
+      : [...giorniDisponibili, giornoCliccato]; // se invece non è presente tra i giorni disponibili dell'indirizzo , lo aggiungo
+    //aggiorno l'indirizzo selezionato con i nuovi giornni disponibili
+    setSelectedIndirizzo({ ...selectedIndirizzo, giorniDisponibili: giorniAggiornati });
+  };
 
   return (
     <Container className="my-5">
       <div className="d-flex align-items-center justify-content-between mb-3">
         <h2 className="mx-auto mb-4 mt-2">Gestione Indirizzi</h2>
         <div>
-          <Button className="btn-primary" style={{ marginLeft: "-133px" }} onClick={openAddModal}>
+          <Button
+            className="btn-primary"
+            style={{ marginLeft: "-133px" }}
+            onClick={() => {
+              if (giorniAssegnati.length === 6) {
+                setErroreNoGiorniDisponibili(
+                  "Non ci sono giorni liberi. Prima di aggiungere un nuovo indirizzo, rimuovi un giorno da uno degli indirizzi esistenti."
+                );
+                setTimeout(() => setErroreNoGiorniDisponibili(""), 5000); // nasconde l'errore dopo 5 sec
+              } else {
+                openAddModal();
+              }
+            }}
+          >
             + Aggiungi Indirizzo
           </Button>
         </div>
@@ -188,7 +232,7 @@ const GestioneIndirizziComponent = () => {
       {loading && <Spinner animation="border" className="d-block mx-auto" />}
       {error && <Alert variant="danger">{error}</Alert>}
       {!loading && indirizzi.length === 0 && <Alert variant="warning">Nessun indirizzo trovato.</Alert>}
-
+      {erroreNoGiorniDisponibili && <Alert variant="danger">{erroreNoGiorniDisponibili}</Alert>}
       {!loading && indirizzi.length > 0 && (
         <div className="table-responsive">
           <Table striped bordered hover responsive="sm" variant="dark">
@@ -200,7 +244,7 @@ const GestioneIndirizziComponent = () => {
                 <th>Città</th>
                 <th>Provincia</th>
                 <th>Nome Studio</th>
-                {/* <th>Giorni Disponibili</th> */}
+                <th>Giorni Disponibili</th>
                 <th>Azioni</th>
               </tr>
             </thead>
@@ -213,7 +257,7 @@ const GestioneIndirizziComponent = () => {
                   <td>{indirizzo.citta}</td>
                   <td>{indirizzo.provincia}</td>
                   <td>{indirizzo.nomeStudio}</td>
-                  {/* <td>{indirizzo.giorniDisponibili}</td> */}
+                  <td>{indirizzo.giorniDisponibili?.join(" - ") || "Nessun giorno assegnato"}</td>
 
                   <td className="d-flex justify-content-center align-item-center">
                     <TfiPencilAlt className="icon-edit me-2 mt-1" style={{ cursor: "pointer", color: "orange" }} onClick={() => openEditModal(indirizzo)} />
@@ -282,19 +326,25 @@ const GestioneIndirizziComponent = () => {
                 />
               </Form.Group>
 
-              {/* <Form.Group className="mt-3">
+              <Form.Group className="mt-3">
                 <Form.Label>Giorni disponibili</Form.Label>
-                {giorniSettimana.map((giorno) => (
-                  <Form.Check
-                    key={giorno}
-                    type="checkbox"
-                    label={giorno}
-                    value={giorno}
-                    checked={(selectedIndirizzo.giorniDisponibili || []).includes(giorno)}
-                    onChange={() => toggleGiornoDisponibile(giorno)}
-                  />
-                ))}
-              </Form.Group> */}
+                {giorniSettimana.map((giorno) => {
+                  //per disabilitare i giorni che non sono assegnati all'indirizzo selezionato, e che sono gia assegnati a un altro indirizzo
+                  const giaAssegnato = giorniAssegnati.includes(giorno) && !selectedIndirizzo.giorniDisponibili.includes(giorno);
+
+                  return (
+                    <Form.Check
+                      key={giorno}
+                      type="checkbox"
+                      label={giorno}
+                      value={giorno}
+                      disabled={giaAssegnato}
+                      checked={selectedIndirizzo.giorniDisponibili.includes(giorno)}
+                      onChange={() => toggleGiornoDisponibile(giorno)}
+                    />
+                  );
+                })}
+              </Form.Group>
 
               <Form.Group className="mt-3">
                 <Form.Label>Modifica luogo</Form.Label>
@@ -316,7 +366,13 @@ const GestioneIndirizziComponent = () => {
             </Form>
           </Modal.Body>
           <Modal.Footer className="bg-dark text-light">
-            <Button variant="secondary" onClick={() => setShowEditModal(false)}>
+            <Button
+              variant="secondary"
+              onClick={() => {
+                setShowEditModal(false);
+                resetSelectedIndirizzo();
+              }}
+            >
               Chiudi
             </Button>
             <Button variant="primary" onClick={handleEdit}>
@@ -366,7 +422,7 @@ const GestioneIndirizziComponent = () => {
                 />
               </Form.Group>
 
-              {/* <Form.Group className="mt-3">
+              <Form.Group className="mt-3">
                 <Form.Label>Giorni disponibili</Form.Label>
                 {giorniSettimana.map((giorno) => (
                   <Form.Check
@@ -374,16 +430,22 @@ const GestioneIndirizziComponent = () => {
                     type="checkbox"
                     label={giorno}
                     value={giorno}
-                    disabled={giorniAssegnati.includes(giorno)} // disabilita se già assegnato altrove
-                    checked={(selectedIndirizzo.giorniDisponibili || []).includes(giorno)}
+                    disabled={giorniAssegnati.includes(giorno)}
+                    checked={selectedIndirizzo.giorniDisponibili.includes(giorno)}
                     onChange={() => toggleGiornoDisponibile(giorno)}
                   />
                 ))}
-              </Form.Group> */}
+              </Form.Group>
             </Form>
           </Modal.Body>
           <Modal.Footer className="bg-dark text-light">
-            <Button variant="secondary" onClick={() => setShowAddModal(false)}>
+            <Button
+              variant="secondary"
+              onClick={() => {
+                setShowAddModal(false);
+                resetSelectedIndirizzo();
+              }}
+            >
               Chiudi
             </Button>
             <Button variant="primary" onClick={handleAdd}>

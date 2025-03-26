@@ -17,10 +17,13 @@ const CreaPrenotazioneComponent = () => {
   const [utenti, setUtenti] = useState([]);
   const [selectedUtente, setSelectedUtente] = useState("");
   const [indirizziFiltrati, setIndirizziFiltrati] = useState([]);
+  // const [indirizziFiltrati, setIndirizziFiltrati] = useState([]);
 
   const navigate = useNavigate();
   const userRole = localStorage.getItem("userRole");
   const jwtToken = localStorage.getItem("jwtToken");
+
+  const giorniSettimana = ["LUNEDI", "MARTEDI", "MERCOLEDI", "GIOVEDI", "VENERDI", "SABATO"];
 
   // Fetch per ottenere i servizi disponibili
   useEffect(() => {
@@ -130,24 +133,20 @@ const CreaPrenotazioneComponent = () => {
   }, [jwtToken]);
 
   //per filtrare gli indirizi disponibili in base aaal giorno --> lunedi- martedì SPORTING VILLAGE, mercoledì-giovedì VERTICAL, venerdì-sabato STUDIO PRIVATO
+  // useEffect(() => {
   useEffect(() => {
-    if (!dataSelezionata) return;
+    if (!dataSelezionata || indirizzi.length === 0) return;
 
-    const giornoSettimana = new Date(dataSelezionata).getDay(); // 0 = Domenica, 1 = Lunedì, 2 = Martedì ecc.
-    let indirizziValidi = [];
+    const indexGiorno = new Date(dataSelezionata).getDay(); // 0 = DOMENICA, 1 = LUNEDI, ecc.
+    const giornoSettimana = giorniSettimana[indexGiorno - 1]; //escludendo la  domenica sarebbe 0 = LUNEDI, 1 = MARTEDI quindi indexGiorno-1 si sitemano gli indici
 
-    if (giornoSettimana === 1 || giornoSettimana === 2) {
-      indirizziValidi = indirizzi.filter((indirizzo) => indirizzo.id === 22); // 7/9/11 id degli indirizzi presi dal db
-    } else if (giornoSettimana === 3 || giornoSettimana === 4) {
-      indirizziValidi = indirizzi.filter((indirizzo) => indirizzo.id === 23);
-    } else if (giornoSettimana === 5 || giornoSettimana === 6) {
-      indirizziValidi = indirizzi.filter((indirizzo) => indirizzo.id === 24);
-    } else {
-      indirizziValidi = []; // Domenica
-    }
+    const indirizziCompatibili = indirizzi.filter((indirizzo) => indirizzo.giorniDisponibili?.includes(giornoSettimana));
 
-    setIndirizziFiltrati(indirizziValidi);
-    setSelectedIndirizzo(""); // reset selezione
+    console.log("Giorno selezionato:", giornoSettimana);
+    console.log("Indirizzi compatibili:", indirizziCompatibili);
+
+    setIndirizziFiltrati(indirizziCompatibili);
+    setSelectedIndirizzo("");
   }, [dataSelezionata, indirizzi]);
 
   return (
@@ -155,6 +154,7 @@ const CreaPrenotazioneComponent = () => {
       <Row className="justify-content-md-center">
         <Col md={6}>
           <h2 className="text-center mt-5">Crea una nuova prenotazione</h2>
+
           {errorToken ? (
             <div className="alert alert-danger mt-5">
               {errorToken}{" "}
@@ -181,7 +181,11 @@ const CreaPrenotazioneComponent = () => {
                 </Alert>
               )}
 
-              <Form onSubmit={handleCreaPrenotazione} className="mt-5">
+              <Button variant="primary" className="mt-3" onClick={() => navigate("/indirizzo")}>
+                Indirizzi e Giorni Disponibili
+              </Button>
+
+              <Form onSubmit={handleCreaPrenotazione} className="mt-3">
                 {/* Data */}
                 <Form.Group className="mb-3">
                   <Form.Label>Seleziona la Data</Form.Label>
