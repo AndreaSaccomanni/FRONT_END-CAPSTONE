@@ -137,11 +137,11 @@ const CreaPrenotazioneComponent = () => {
     let indirizziValidi = [];
 
     if (giornoSettimana === 1 || giornoSettimana === 2) {
-      indirizziValidi = indirizzi.filter((indirizzo) => indirizzo.id === 7); // 7/9/11 id degli indirizzi presi dal db
+      indirizziValidi = indirizzi.filter((indirizzo) => indirizzo.id === 22); // 7/9/11 id degli indirizzi presi dal db
     } else if (giornoSettimana === 3 || giornoSettimana === 4) {
-      indirizziValidi = indirizzi.filter((indirizzo) => indirizzo.id === 9);
+      indirizziValidi = indirizzi.filter((indirizzo) => indirizzo.id === 23);
     } else if (giornoSettimana === 5 || giornoSettimana === 6) {
-      indirizziValidi = indirizzi.filter((indirizzo) => indirizzo.id === 11);
+      indirizziValidi = indirizzi.filter((indirizzo) => indirizzo.id === 24);
     } else {
       indirizziValidi = []; // Domenica
     }

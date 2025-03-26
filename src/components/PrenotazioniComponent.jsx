@@ -42,6 +42,7 @@ const PrenotazioniComponent = () => {
       })
 
       .then((data) => {
+        console.log("Prenotazioni:", data);
         setPrenotazioni(data);
       })
 
@@ -69,7 +70,6 @@ const PrenotazioniComponent = () => {
 
   const openEditModal = (prenotazione) => {
     //CONVERSIONE DELLA DATA RISPETTO AL FUSO ORARIO
-
     //quando creo un oggetto Date ES. const dateObj = new Date("2025-03-11T15:00:00"); IN ITALIA VIENE LETTO COME --> Tue Mar 11 2025 16:00:00 GMT+0100 (Ora standard dell’Europa centrale)
     //L'ora UTC è 15:00, ma viene mostrata come 16:00 (perché in Italia abbiamo UTC+1)
     // dateObj.getTimezoneOffset() * 60000  -->  restituisce la differenza tra UTC (in italia UTC+1 in inverso e +2 in estate) e il fusorario locale e con *60000 la converte in millisecondi
@@ -90,6 +90,7 @@ const PrenotazioniComponent = () => {
   const handleDelete = (id) => {
     if (!window.confirm("Sei sicuro di voler cancellare questa prenotazione?")) return;
 
+    //fetch  per eliminare una prenotazione
     fetch(`http://localhost:8080/prenotazioni/delete/${id}`, {
       method: "DELETE",
       headers: {
@@ -120,6 +121,7 @@ const PrenotazioniComponent = () => {
 
     console.log("Dati inviati:", payload);
 
+    //fetch per aggiornare una prenotazione
     fetch(`http://localhost:8080/prenotazioni/update/${selectedPrenotazione.prenotazioneId}`, {
       method: "PUT",
       headers: {
@@ -195,7 +197,10 @@ const PrenotazioniComponent = () => {
                   <td>{prenotazione.nomeServizio}</td>
                   <td>{new Date(prenotazione.dataOraPrenotazione).toLocaleDateString()}</td>
                   <td>{new Date(prenotazione.dataOraPrenotazione).toLocaleTimeString()}</td>
-                  <td>{prenotazione.indirizzo}</td>
+                  <td>
+                    {prenotazione.indirizzo.via} {prenotazione.indirizzo.numeroCivico}, {prenotazione.indirizzo.citta} ({prenotazione.indirizzo.provincia}) -{" "}
+                    {prenotazione.indirizzo.nomeStudio}
+                  </td>
                   <td>{prenotazione.note || "Nessuna nota"}</td>
                   {userRole === "ADMIN" || userRole === "PERSONAL_TRAINER" ? (
                     <td>
