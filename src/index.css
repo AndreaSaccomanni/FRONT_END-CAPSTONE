@@ -264,6 +264,31 @@ ul li {
   border-bottom: 2px solid rgba(255, 140, 0, 0.2);
 }
 
+@media (max-width: 477px) {
+  .navbar-brand {
+    font-size: 1.7rem !important;
+  }
+  .navbar-toggler {
+    margin-left: 40%;
+  }
+}
+
+@media (max-width: 465px) {
+  .navbar-brand {
+    font-size: 1.5rem !important;
+  }
+}
+@media (max-width: 425px) {
+  .navbar-brand {
+    font-size: 1.5rem !important;
+  }
+}
+@media (max-width: 310px) {
+  .navbar-brand {
+    font-size: 0.8rem !important;
+  }
+}
+
 /*------------------ FOOTER -------------*/
 
 .footer-gradient {

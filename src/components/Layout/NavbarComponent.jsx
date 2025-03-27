@@ -46,14 +46,14 @@ const NavbarComponent = () => {
   };
 
   return (
-    <Navbar variant="dark" expand="lg" className=" navbar-gradient py-3 px-3">
+    <Navbar variant="dark" expand="xl" className=" navbar-gradient py-3 px-3">
       <Container fluid>
-        <Navbar.Brand as={Link} to="/" className="fw-bold fs-4 d-flex align-items-center">
+        <Navbar.Brand as={Link} to="/" className="fw-bold fs-4 d-flex align-items-center navbar-brand-responsive">
           <img
             src={logo}
             alt="Logo AS"
             className="me-2"
-            style={{ width: "40px", height: "40px", objectFit: "contain", filter: "drop-shadow(0px 0px 5px rgba(255, 140, 0, 0.5))" }}
+            style={{ width: "43px", height: "43px", objectFit: "contain", filter: "drop-shadow(0px 0px 5px rgba(255, 140, 0, 0.5))" }}
           />
           Alessandro Saccomanni - PT
         </Navbar.Brand>

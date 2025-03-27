@@ -220,7 +220,6 @@ const GestioneIndirizziComponent = () => {
         <div>
           <Button
             className="btn-primary"
-            style={{ marginLeft: "-133px" }}
             onClick={() => {
               if (giorniAssegnati.length === 6) {
                 setErroreNoGiorniDisponibili(
@@ -267,9 +266,11 @@ const GestioneIndirizziComponent = () => {
                   <td>{indirizzo.nomeStudio}</td>
                   <td>{indirizzo.giorniDisponibili?.join(" - ") || "Nessun giorno assegnato"}</td>
 
-                  <td className="d-flex justify-content-center align-item-center">
-                    <TfiPencilAlt className="icon-edit me-2 mt-1" style={{ cursor: "pointer", color: "orange" }} onClick={() => openEditModal(indirizzo)} />
-                    <FaTrashAlt className="icon-delete ms-3 mt-1" style={{ cursor: "pointer", color: "red" }} onClick={() => handleDelete(indirizzo.id)} />
+                  <td>
+                    <div className="d-flex justifi-content-center align-items-center">
+                      <TfiPencilAlt className="icon-edit me-2 mt-1" style={{ cursor: "pointer", color: "orange" }} onClick={() => openEditModal(indirizzo)} />
+                      <FaTrashAlt className="icon-delete ms-3 mt-1" style={{ cursor: "pointer", color: "red" }} onClick={() => handleDelete(indirizzo.id)} />
+                    </div>
                   </td>
                 </tr>
               ))}

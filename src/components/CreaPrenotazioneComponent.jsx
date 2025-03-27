@@ -180,10 +180,11 @@ const CreaPrenotazioneComponent = () => {
                   Prima di selezionare un orario, scegli una data
                 </Alert>
               )}
-
-              <Button variant="primary" className="mt-3" onClick={() => navigate("/indirizzo")}>
-                Indirizzi e Giorni Disponibili
-              </Button>
+              <div className="d-flex justify-content-center ">
+                <Button variant="primary" className="mt-3 mx-auto" onClick={() => navigate("/indirizzo")}>
+                  Indirizzi e Giorni Disponibili
+                </Button>
+              </div>
 
               <Form onSubmit={handleCreaPrenotazione} className="mt-3">
                 {/* Data */}
