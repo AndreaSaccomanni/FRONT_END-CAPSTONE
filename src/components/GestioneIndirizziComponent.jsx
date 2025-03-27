@@ -53,7 +53,8 @@ const GestioneIndirizziComponent = () => {
       .then((data) => {
         setIndirizzi(data);
         //ricavo un array che contiene tutti i giorni occupati di ogni indirizzo -> ogni indirizzo avrebbe un array di giorni assegnati
-        //con flatMap --> ricavo tutti gli array di indirizzo.giorniDisponibili e li unisco tutti i n un unico array ceh conterrà quindi tutti i giorni occpuati
+        //con flatMap --> unisco più array in un unico array --> ricavo tutti gli array che contengono i giorni di ogni indirizzo (indirizzo.giorniDisponibili)
+        // e li unisco tutti in un unico array che conterrà quindi tutti i giorni occpuati
         const giorniOccupati = data.flatMap((indirizzo) => indirizzo.giorniDisponibili || []);
         setGiorniAssegnati(giorniOccupati);
       })
@@ -152,8 +153,15 @@ const GestioneIndirizziComponent = () => {
       .then((res) => {
         if (res && !res.ok) throw new Error("Errore nella cancellazione dell'indirizzo");
 
-        // Rimozione indirizzo da lista indirizzi
-        setIndirizzi((indirizziAttuali) => indirizziAttuali.filter((ind) => ind.id !== id));
+        // Rimozione indirizzo da lista indirizzi e rimozione dei giorni dell'indirizzo eliminato da quelli assegnato --> giorni di nuovo disponibili se elimino indirizzo
+        setIndirizzi((indirizziAttuali) => {
+          const nuovaLista = indirizziAttuali.filter((ind) => ind.id !== id);
+
+          const nuoviGiorniAssegnati = nuovaLista.flatMap((ind) => ind.giorniDisponibili || []);
+          setGiorniAssegnati(nuoviGiorniAssegnati);
+
+          return nuovaLista;
+        });
       })
       .catch((err) => setError(err.message));
   };
