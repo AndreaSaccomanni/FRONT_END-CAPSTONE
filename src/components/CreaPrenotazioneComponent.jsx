@@ -17,7 +17,6 @@ const CreaPrenotazioneComponent = () => {
   const [utenti, setUtenti] = useState([]);
   const [selectedUtente, setSelectedUtente] = useState("");
   const [indirizziFiltrati, setIndirizziFiltrati] = useState([]);
-  // const [indirizziFiltrati, setIndirizziFiltrati] = useState([]);
 
   const navigate = useNavigate();
   const userRole = localStorage.getItem("userRole");

@@ -9,12 +9,15 @@ const Home = () => {
   //controllo per vedere se l'utente è autenticato, se nel localStorage c'è il tokken o meno
   useEffect(() => {
     const handleStorageChange = () => {
-      setIsAuthenticated(!!localStorage.getItem("jwtToken"));
+      setIsAuthenticated(!!localStorage.getItem("jwtToken")); // !! converte il valore in booleano quindi se getItem trova un valore --> ritorna true altrimenti false
     };
-
+    //quando il localStorage cambia viene chiamata la funzione, ma il cambiamento non deve provenire da questa pagina
+    //con "storage" viene subito preso in considerazione un cambiamento nel local o session storage
     window.addEventListener("storage", handleStorageChange);
 
     return () => {
+      // Quando viene chiuso questo componente, viene pulito tutto quello che ha lasciato attivo
+      //non viengono più ascoltati i cambiammenti nel localStorage
       window.removeEventListener("storage", handleStorageChange);
     };
   }, []);
