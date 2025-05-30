@@ -63,15 +63,15 @@ const NavbarComponent = () => {
             <Nav.Link as={Link} to="/" className="px-3">
               Home
             </Nav.Link>
-            <Nav.Link as={Link} to="/chiSono" className="px-3">
+            {/* <Nav.Link as={Link} to="/chiSono" className="px-3">
               Chi sono
-            </Nav.Link>
+            </Nav.Link> */}
             <Nav.Link as={Link} to="/indirizzo" className="px-3">
               Indirizzi
             </Nav.Link>
-            <Nav.Link as={Link} to="/servizi" className="px-3">
+            {/* <Nav.Link as={Link} to="/servizi" className="px-3">
               Servizi
-            </Nav.Link>
+            </Nav.Link> */}
             <Nav.Link as={Link} to="/creaprenotazione" className="px-3">
               Prenota
             </Nav.Link>

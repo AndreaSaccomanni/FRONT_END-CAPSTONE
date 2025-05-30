@@ -14,6 +14,8 @@ import CreaPrenotazioneComponent from "./components/CreaPrenotazioneComponent";
 import UtentiComponent from "./components/UtentiComponent";
 import IndirizzoComponent from "./components/IndirizzoComponent";
 import GestioneIndirizziComponent from "./components/GestioneIndirizziComponent";
+import FormContattami from "./components/FormContattami";
+import HeroSection from "./components/HeroSection";
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/chiSono" element={<ChiSono />} />
             <Route path="/login" element={<LoginComponent />} />
+            <Route path="/heroSection" element={<HeroSection />} />
+            <Route path="/contattami" element={<FormContattami />} />
             <Route path="/registrazione" element={<RegisterComponent />} />
             <Route path="/prenotazioni" element={<PrenotazioniComponent />} />
             <Route path="/servizi" element={<ServiceSection />} />

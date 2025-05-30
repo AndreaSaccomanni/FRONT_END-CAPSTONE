@@ -41,23 +41,35 @@ const ServiceSection = () => {
         "**Massaggio mirato**: Personalizziamo il trattamento in base alle esigenze, concentrandoci sulle aree più soggette a stress e tensione."
       ],
       img: "/src/assets/images/decontratturante.jpg"
+    },
+    {
+      id: 4,
+      titolo: "Applicazione Taping",
+      descrizione: "Tecnica non invasiva per il supporto muscolare e articolare.",
+      dettagli: [
+        "**Sostegno muscolare**: I cerotti aiutano a stabilizzare i muscoli senza limitare il movimento.",
+        "**Riduzione del dolore**: Stimola i recettori cutanei per diminuire la percezione del dolore nelle zone trattate.",
+        "**Miglioramento della circolazione**: Favorisce il drenaggio linfatico e riduce il gonfiore in caso di traumi o infiammazioni.",
+        "**Adatto a varie esigenze**: Utile in ambito sportivo, posturale o riabilitativo, per adulti e bambini."
+      ],
+      img: "/src/assets/images/taping.avif"
     }
   ];
 
-  const isVisible = () => {
-    return localStorage.getItem("jwtToken") ? true : false;
-  };
+  // const isVisible = () => {
+  //   return localStorage.getItem("jwtToken") ? true : false;
+  // };
 
   const toggleService = (id) => {
     setOpenService(openService === id ? null : id);
   };
 
   return (
-    <Container id="servizi" className="my-5">
+    <Container fluid id="servizi" className=" my-5 px-4">
       {/* Sezione Card */}
       <Row className="justify-content-center">
         {servizi.map((servizio) => (
-          <Col key={servizio.id} lg={4} md={6} sm={12} className="mt-4 mt-md-0 d-flex">
+          <Col key={servizio.id} lg={3} md={6} sm={12} className=" mt-4 mt-md-4 mb-md-4  d-flex">
             <Card className="fixedCard flex-grow-1">
               <Card.Img variant="top" src={servizio.img} alt={servizio.titolo} />
               <div className="overlay"></div>
@@ -92,14 +104,14 @@ const ServiceSection = () => {
       </Row>
 
       {/* Pulsante Prenota o Messaggio Login */}
-      <Row className="mt-5">
+      {/* <Row className="mt-5">
         <Col className="text-center">
           {isVisible() ? (
             <Link to="/creaprenotazione" className="btn btn-primary btn-lg">
               Prenota
             </Link>
           ) : (
-            <p className="mt-3 text-light">
+            <p className="mt-3 mt-md-0 text-light">
               Per effettuare una prenotazione è necessario fare il{" "}
               <Link to="/login" className="link-arancione fw-bold">
                 login
@@ -112,7 +124,7 @@ const ServiceSection = () => {
             </p>
           )}
         </Col>
-      </Row>
+      </Row> */}
     </Container>
   );
 };
