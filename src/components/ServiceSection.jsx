@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Card, Button, Collapse } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
@@ -64,12 +64,30 @@ const ServiceSection = () => {
     setOpenService(openService === id ? null : id);
   };
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("show");
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    const elements = document.querySelectorAll(".card-wrapper");
+    elements.forEach((el) => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <Container fluid id="servizi" className=" my-5 px-4">
       {/* Sezione Card */}
       <Row className="justify-content-center">
-        {servizi.map((servizio) => (
-          <Col key={servizio.id} lg={3} md={6} sm={12} className=" mt-4 mt-md-4 mb-md-4  d-flex">
+        {servizi.map((servizio, index) => (
+          <Col key={servizio.id} lg={3} md={6} sm={12} className={` mt-4 mt-md-4 mb-md-4  d-flex card-wrapper ${index < 2 == 0 ? "from-left" : "from-right"}`}>
             <Card className="fixedCard flex-grow-1">
               <Card.Img variant="top" src={servizio.img} alt={servizio.titolo} />
               <div className="overlay"></div>

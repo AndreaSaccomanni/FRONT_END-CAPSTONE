@@ -1,7 +1,7 @@
 // src/components/Layout/NavbarComponent.jsx
 import React, { useEffect, useState } from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "/src/assets/images/logo.webp";
 
 const NavbarComponent = () => {
@@ -44,16 +44,19 @@ const NavbarComponent = () => {
       window.location.reload();
     }
   };
+  const location = useLocation();
+
+  const isHome = location.pathname === "/";
 
   return (
-    <Navbar variant="dark" expand="xl" className=" navbar-gradient py-3 px-3">
+    <Navbar expand="xl" className={`navbar-gradient py-3 px-3 ${isHome ? "navbar-transparent text-light" : "navbar-dark"}`}>
       <Container fluid>
-        <Navbar.Brand as={Link} to="/" className="fw-bold fs-4 d-flex align-items-center navbar-brand-responsive">
+        <Navbar.Brand as={Link} to="/" className="fw-bold fs-4 d-flex align-items-center navbar-brand-responsive" style={{ color: "white" }}>
           <img
             src={logo}
             alt="Logo AS"
             className="me-2"
-            style={{ width: "43px", height: "43px", objectFit: "contain", filter: "drop-shadow(0px 0px 5px rgba(255, 140, 0, 0.5))" }}
+            style={{ color: "white", width: "43px", height: "43px", objectFit: "contain", filter: "drop-shadow(0px 0px 5px rgba(255, 140, 0, 0.5))" }}
           />
           Alessandro Saccomanni - PT
         </Navbar.Brand>
@@ -79,10 +82,10 @@ const NavbarComponent = () => {
           <Nav className="text-center">
             {!isAuthenticated ? (
               <>
-                <Nav.Link as={Link} to="/login" className="px-3">
+                <Nav.Link as={Link} to="/login" className={`px-3 ${isHome ? "nav-link-red" : "nav-link"}`}>
                   Login
                 </Nav.Link>
-                <Nav.Link as={Link} to="/registrazione" className="px-3">
+                <Nav.Link as={Link} to="/registrazione" className={`px-3 ${isHome ? "nav-link-red" : "nav-link"}`}>
                   Registrati
                 </Nav.Link>
               </>

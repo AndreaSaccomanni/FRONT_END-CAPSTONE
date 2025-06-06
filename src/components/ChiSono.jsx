@@ -6,7 +6,8 @@ const ChiSono = () => {
   const [openEsperienze, setOpenEsperienze] = useState(false);
 
   return (
-    <Container className="my-5 chi-sono-container">
+    <Container className=" chi-sono-container">
+      <h2 className="mb-2 pt-3 text-center">Chi sono?</h2>
       <Row className="align-items-center">
         {/* Colonna Immagine */}
         <Col md={4} className="text-center">
@@ -14,7 +15,7 @@ const ChiSono = () => {
         </Col>
 
         {/* Colonna Testo */}
-        <Col md={8} className="pe-0 text-start">
+        <Col md={8} className="pe-5 text-start">
           <p className="fs-5">
             Mi chiamo <strong>Alessandro Saccomanni</strong>, sono un <strong>Chinesiologo Sportivo</strong> e <strong>Personal Trainer</strong>. Il mio
             percorso di studi mi ha permesso di sviluppare un <strong>approccio olistico</strong> all’attività fisica che mi permette di adattarla alle{" "}

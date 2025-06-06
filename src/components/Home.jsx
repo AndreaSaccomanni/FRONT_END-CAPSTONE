@@ -7,21 +7,11 @@ import HeroSection from "./HeroSection";
 
 const Home = () => {
   return (
-    <Container fluid className="home-container text-light">
+    <Container fluid className="home-container text-light px-0">
       {/* Hero Section */}
       <HeroSection />
 
-      <section id="next-section" className="mt-3 text-center">
-        <h2 className="mb-2">Chi sono?</h2>
-        {/* <p className="mx-auto" style={{ maxWidth: "800px" }}>
-          Sono un <strong>personal trainer</strong> con una grande passione per il benessere fisico e mentale. Il mio obiettivo è aiutarti a raggiungere i tuoi
-          obiettivi con un approccio personalizzato, ascoltando le tue esigenze e adattando ogni trattamento su misura per te.
-        </p>
-        <div className="d-flex justify-content-center">
-          <Button variant="warning" as={Link} to="/chiSono" className="btn-lg mt-3 ">
-            info su di me
-          </Button>
-        </div> */}
+      <section id="next-section" className=" text-center">
         <ChiSono />
       </section>
 
