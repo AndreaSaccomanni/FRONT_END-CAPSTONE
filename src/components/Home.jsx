@@ -4,6 +4,7 @@ import ChiSono from "./ChiSono";
 import ServiceSection from "./ServiceSection";
 import FormContattami from "./FormContattami";
 import HeroSection from "./HeroSection";
+import videoSfondo from "/src/assets/video/sfondoAnimato.mp4";
 
 const Home = () => {
   return (
@@ -16,37 +17,47 @@ const Home = () => {
       </section>
 
       <section className="mt-5">
-        <h2 className="text-center mb-2">Cosa posso offrirti?</h2>
-        {/* <Row className="justify-content-center">
-          <Col md={4} sm={12} className="text-center">
-            <i className="fas fa-dumbbell fa-3x icon-arancione"></i>
-            <h4 className="mt-3">Consulenze Personalizzate</h4>
-            <p>Ti aiuto a creare un piano su misura per migliorare la tua forma fisica.</p>
-          </Col>
-          <Col md={4} sm={12} className="text-center">
-            <i className="fas fa-spa fa-3x icon-arancione"></i>
-            <h4 className="mt-3">Massaggi Rilassanti</h4>
-            <p>Un momento di relax per sciogliere le tensioni e rigenerare corpo e mente.</p>
-          </Col>
-          <Col md={4} sm={12} className="text-center">
-            <i className="fas fa-running fa-3x icon-arancione"></i>
-            <h4 className="mt-3">Massaggi Sportivi</h4>
-            <p>Ideale per migliorare il recupero muscolare e prevenire infortuni.</p>
-          </Col>
-        </Row> */}
         <ServiceSection />
-        {/* <div className="d-flex justify-content-center">
-          <Button variant="warning" as={Link} to="/servizi" className="btn-lg mt-3 ">
-            Scopri i servizi
-          </Button>
-        </div> */}
       </section>
 
-      <section className="text-center mt-4 pb-2">
-        <h2 py-0 my-0>
-          Vuoi iniziare il tuo percorso?
-        </h2>
-        <FormContattami />
+      {/*---- VIDEO DI SFONDO -----*/}
+      {/* <section className="sezione-video-bg text-center mt-4 pb-2 position-relative">
+        
+        <video autoPlay muted loop className="video-background ">
+          <source src={videoSfondo} type="video/mp4" />
+        </video>
+
+        
+        <div className="contenuto-form position-relative z-1">
+          <Row>
+            <Col md={4}></Col>
+            <Col md={4}>
+              <h2 className="py-0 my-0">Vuoi iniziare il tuo percorso?</h2>
+              <FormContattami />
+            </Col>
+            <Col md={4}></Col>
+          </Row>
+        </div>
+      </section> */}
+
+      <section className="sezione-video-bg text-center mt-4 pb-2">
+        <Container fluid>
+          <Row className="align-items-center">
+            {/* Colonna video */}
+            <Col md={8} className="col-video position-relative">
+              <video autoPlay muted loop playsInline className="video-col">
+                <source src={videoSfondo} type="video/mp4" />
+              </video>
+              {/* eventualmente puoi aggiungere un overlay con opacità o colore */}
+            </Col>
+
+            {/* Colonna form */}
+            <Col md={4} className="d-flex flex-column align-items-center justify-content-center contenuto-form">
+              <h2 className="py-0 my-0">Vuoi iniziare il tuo percorso?</h2>
+              <FormContattami />
+            </Col>
+          </Row>
+        </Container>
       </section>
     </Container>
   );

@@ -49,7 +49,7 @@ const NavbarComponent = () => {
   const isHome = location.pathname === "/";
 
   return (
-    <Navbar expand="xl" className={`navbar-gradient py-3 px-3 ${isHome ? "navbar-transparent text-light" : "navbar-dark"}`}>
+    <Navbar expand="md" className={`navbar-gradient py-3 px-3 ${isHome ? "navbar-transparent text-light" : "navbar-dark"}`}>
       <Container fluid>
         <Navbar.Brand as={Link} to="/" className="fw-bold fs-4 d-flex align-items-center navbar-brand-responsive" style={{ color: "white" }}>
           <img

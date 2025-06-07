@@ -83,11 +83,12 @@ const ServiceSection = () => {
   }, []);
 
   return (
-    <Container fluid id="servizi" className=" my-5 px-4">
+    <Container fluid id="servizi" className="pt-4 mt-5 px-4">
+      <h2 className="text-center my-2 fs-1 fw-bold">I miei servizi</h2>
       {/* Sezione Card */}
       <Row className="justify-content-center">
         {servizi.map((servizio, index) => (
-          <Col key={servizio.id} lg={3} md={6} sm={12} className={` mt-4 mt-md-4 mb-md-4  d-flex card-wrapper ${index < 2 == 0 ? "from-left" : "from-right"}`}>
+          <Col key={servizio.id} lg={3} md={6} sm={12} className={` mt-4 mt-md-4 mb-md-4  d-flex card-wrapper ${index < 2 == 0 ? "from-right" : "from-left"}`}>
             <Card className="fixedCard flex-grow-1">
               <Card.Img variant="top" src={servizio.img} alt={servizio.titolo} />
               <div className="overlay"></div>

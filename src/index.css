@@ -14,7 +14,7 @@ h3 {
 }
 body,
 p {
-  font-family: "Roboto", sans-serif;
+  font-family: "Montserrat Alternates", sans-serif;
 }
 
 .cursor-pointer {
@@ -180,7 +180,7 @@ h3 {
 /*EFFETTI SULLE CARD*/
 .card-wrapper {
   opacity: 0;
-  transition: all 0.8s ease;
+  transition: transform 1s ease, opacity 1.5s ease;
 }
 
 .from-left {
@@ -265,17 +265,45 @@ h3 {
   border-radius: 10px;
 }
 
-/* .chi-sono-container ul {
-  list-style-position: inside;
-  padding-left: 0;
-  margin-bottom: 1rem;
+/* ANIMAZIONE TITOLO CHI SONO*/
+.chiSono {
+  font-size: 5rem;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 1s ease-out;
 }
 
-.chi-sono-container li {
-  margin-bottom: 0.5rem;
-  padding-left: 1.5rem;
-  text-indent: -1.5rem;
-} */
+.chiSono.visible {
+  animation: slideIn 2s ease-out forwards;
+}
+
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  50% {
+    opacity: 0.5;
+    transform: translateY(10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* ANIMAZIONE IMMAGINE PROFILO*/
+.fade-image {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+}
+
+.fade-image.visible {
+  opacity: 1;
+  transform: scale(1);
+}
 
 .chi-sono-container .fade-slide {
   opacity: 0;
@@ -286,6 +314,9 @@ h3 {
 .chi-sono-container .fade-slide.show {
   opacity: 1;
   transform: translateY(0);
+}
+.presentazione {
+  letter-spacing: 1.5px;
 }
 
 /* Stile dell'immagine profilo */
@@ -481,4 +512,103 @@ ul li {
 /*------------------- FORM CONTATTAMI ---------------*/
 .container-form {
   max-width: 500px;
+}
+
+/* ---- VIDEO DI SFONDO -------*/
+/* .sezione-video-bg {
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+}
+
+.video-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.5;
+  z-index: 1;
+}
+
+.contenuto-form {
+  position: relative;
+  z-index: 2;
+  padding: 3rem 1rem;
+} */
+
+/* ---- VIDEO SEPARATO ----*/
+.sezione-video-bg {
+  overflow: hidden;
+}
+
+.col-video {
+  position: relative;
+  height: 100%;
+  min-height: 100vh; /* facoltativo per farlo grande quanto schermo */
+}
+
+.video-col {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  opacity: 0.5; /* o quello che preferisci */
+}
+
+.contenuto-form {
+  position: relative;
+  z-index: 2;
+  padding: 2rem;
+
+  border-radius: 10px;
+}
+
+/* DECORAZIONI*/
+.img-decorativa {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.2;
+  z-index: 0;
+  animation: fluttuazione-complessa 10s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes fluttuazione-complessa {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  25% {
+    transform: translate(-10px, -10px) rotate(1deg);
+  }
+  50% {
+    transform: translate(0, -20px) rotate(-1deg);
+  }
+  75% {
+    transform: translate(10px, -10px) rotate(1deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+}
+
+/* ---------- CURSORE --------*/
+.cursor-follower {
+  position: fixed;
+  width: 30px;
+  height: 30px;
+  background-color: rgba(255, 165, 0, 0.2);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  transition: transform 0.07s ease;
 }

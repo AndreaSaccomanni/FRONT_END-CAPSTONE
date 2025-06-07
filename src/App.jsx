@@ -16,12 +16,14 @@ import IndirizzoComponent from "./components/IndirizzoComponent";
 import GestioneIndirizziComponent from "./components/GestioneIndirizziComponent";
 import FormContattami from "./components/FormContattami";
 import HeroSection from "./components/HeroSection";
+import CursorFollower from "./components/Cursore";
 
 function App() {
   return (
     <BrowserRouter>
       <div className="App">
         <NavbarComponent />
+        <CursorFollower />
         <div className="content">
           <Routes>
             <Route path="/" element={<Home />} />
