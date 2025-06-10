@@ -47,6 +47,7 @@ body {
   padding: 50px 0;
   border-radius: 10px;
   border: solid 0.2px #522e03;
+  margin-bottom: -24px;
 }
 
 /* Stile delle card con effetto luce */
@@ -62,8 +63,8 @@ body {
 }
 
 .fixedCard:hover {
-  box-shadow: 0px 0px 25px rgba(255, 140, 0, 0.4); /* Effetto neon arancione più forte al passaggio */
-  transform: translateY(-5px);
+  box-shadow: 0px 0px 25px rgba(255, 140, 0, 0.6); /* Effetto neon arancione più forte al passaggio */
+  transform: /*translateY(-10px)*/ scale(1.1);
 }
 
 /* Immagini con bordi squadrati sotto */
@@ -437,7 +438,8 @@ ul li {
 }
 
 .footer-home {
-  background: linear-gradient(180deg, #2e3338 0%, #121212 100%);
+  /* background: linear-gradient(180deg, #2e3338 0%, #121212 100%); */
+  background: rgb(31 29 29 / 75%);
 }
 
 /* Sfondo del footer nella pagina Servizi */
@@ -512,13 +514,14 @@ ul li {
 /*------------------- FORM CONTATTAMI ---------------*/
 .container-form {
   max-width: 500px;
+
+  max-height: 400px;
 }
 
 /* ---- VIDEO DI SFONDO -------*/
-/* .sezione-video-bg {
+.sezione-video-bg {
   position: relative;
   overflow: hidden;
-  min-height: 100vh;
 }
 
 .video-background {
@@ -536,17 +539,17 @@ ul li {
   position: relative;
   z-index: 2;
   padding: 3rem 1rem;
-} */
+}
 
 /* ---- VIDEO SEPARATO ----*/
-.sezione-video-bg {
+/* .sezione-video-bg {
   overflow: hidden;
 }
 
 .col-video {
   position: relative;
   height: 100%;
-  min-height: 100vh; /* facoltativo per farlo grande quanto schermo */
+  min-height: 100vh; 
 }
 
 .video-col {
@@ -557,7 +560,7 @@ ul li {
   height: 100%;
   object-fit: cover;
   z-index: 1;
-  opacity: 0.5; /* o quello che preferisci */
+  opacity: 0.5; 
 }
 
 .contenuto-form {
@@ -566,7 +569,7 @@ ul li {
   padding: 2rem;
 
   border-radius: 10px;
-}
+} */
 
 /* DECORAZIONI*/
 .img-decorativa {
@@ -578,11 +581,11 @@ ul li {
   object-fit: cover;
   opacity: 0.2;
   z-index: 0;
-  animation: fluttuazione-complessa 10s ease-in-out infinite;
+  animation: fluttuazione 10s ease-in-out infinite;
   pointer-events: none;
 }
 
-@keyframes fluttuazione-complessa {
+@keyframes fluttuazione {
   0% {
     transform: translate(0, 0) rotate(0deg);
   }
@@ -611,4 +614,40 @@ ul li {
   transform: translate(-50%, -50%);
   z-index: 9999;
   transition: transform 0.07s ease;
+}
+
+/* --------- ICONA WHATSAPP --------*/
+.whatsapp {
+  position: fixed;
+  z-index: 1000;
+  top: 90%;
+  right: 20px;
+  border-radius: 50%;
+}
+.whatsapp:hover {
+  cursor: pointer;
+  transform: scale(1.5);
+  transition: transform 0.07s ease;
+  box-shadow: 0px 0px 15px rgba(2, 249, 64, 0.851);
+}
+
+/* ------ CAROSELLO ------*/
+.motivational-carousel img {
+  object-fit: cover;
+  width: 100%;
+  height: 300px;
+}
+
+@media (min-width: 768px) {
+  .motivational-carousel img {
+    height: 400px;
+  }
+}
+
+.carousel-text-wrapper {
+  color: white;
+  border-radius: 10px;
+  font-style: italic;
+  text-align: left;
+  font-size: 3rem;
 }

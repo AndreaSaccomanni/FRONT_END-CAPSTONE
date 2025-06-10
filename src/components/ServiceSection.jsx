@@ -44,7 +44,7 @@ const ServiceSection = () => {
     },
     {
       id: 4,
-      titolo: "Applicazione Taping",
+      titolo: "Applicazione Tape",
       descrizione: "Tecnica non invasiva per il supporto muscolare e articolare.",
       dettagli: [
         "**Sostegno muscolare**: I cerotti aiutano a stabilizzare i muscoli senza limitare il movimento.",

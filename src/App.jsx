@@ -17,6 +17,7 @@ import GestioneIndirizziComponent from "./components/GestioneIndirizziComponent"
 import FormContattami from "./components/FormContattami";
 import HeroSection from "./components/HeroSection";
 import CursorFollower from "./components/Cursore";
+import WhatsappIcon from "./components/WhatsappIcon";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
       <div className="App">
         <NavbarComponent />
         <CursorFollower />
+        <WhatsappIcon />
         <div className="content">
           <Routes>
             <Route path="/" element={<Home />} />
