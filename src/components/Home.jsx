@@ -1,5 +1,4 @@
 import { Container, Row, Col, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import ChiSono from "./ChiSono";
 import ServiceSection from "./ServiceSection";
 import FormContattami from "./FormContattami";
@@ -14,12 +13,12 @@ const Home = () => {
       {/* Hero Section */}
       <HeroSection />
 
-      <section id="next-section" className=" text-center">
-        <ChiSono />
+      <section id="next-section" className=" vh-100 d-flex justify-content-center align-items-center">
+        <ServiceSection />
       </section>
 
-      <section className="mt-5">
-        <ServiceSection />
+      <section className="mt-4 vh-100 text-center">
+        <ChiSono />
       </section>
 
       <MotivationalCarousel />

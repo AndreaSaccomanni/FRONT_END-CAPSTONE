@@ -19,7 +19,7 @@ const FormContattami = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:3001/api/contatto", {
+      const response = await fetch("http://localhost:8080/mail/sendForm", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -31,6 +31,8 @@ const FormContattami = () => {
         setInviato(true);
         setErrore(false);
         setFormData({ nome: "", cognome: "", email: "", messaggio: "" });
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        alert("Messaggio inviato correttamente");
       } else {
         setErrore(true);
         setInviato(false);
