@@ -8,8 +8,8 @@ const ServiceSection = () => {
   const servizi = [
     {
       id: 1,
-      titolo: "Consulenza Personalizzata",
-      descrizione: "Valutazione iniziale e miglioramento della scheda.",
+      titolo: "Allenamento Personalizzato",
+      descrizione: "Pianificazione di un ciclo di allenamenti o aggiornamento della scheda precedente.",
       dettagli: [
         "**Valutazione iniziale**: Durante il primo incontro analizziamo il tuo stato fisico attuale, i tuoi obiettivi e le tue abitudini di allenamento.",
         "**Miglioramento della scheda**: Se hai già un programma di allenamento, lo ottimizziamo per renderlo più efficace e su misura per te.",
@@ -44,7 +44,7 @@ const ServiceSection = () => {
     },
     {
       id: 4,
-      titolo: "Applicazione Tape",
+      titolo: "Trattamento infortuni",
       descrizione: "Tecnica non invasiva per il supporto muscolare e articolare.",
       dettagli: [
         "**Sostegno muscolare**: I cerotti aiutano a stabilizzare i muscoli senza limitare il movimento.",

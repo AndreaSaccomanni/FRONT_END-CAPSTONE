@@ -66,15 +66,11 @@ const NavbarComponent = () => {
             <Nav.Link as={Link} to="/" className="px-3">
               Home
             </Nav.Link>
-            {/* <Nav.Link as={Link} to="/chiSono" className="px-3">
-              Chi sono
-            </Nav.Link> */}
+
             <Nav.Link as={Link} to="/indirizzo" className="px-3">
               Indirizzi
             </Nav.Link>
-            {/* <Nav.Link as={Link} to="/servizi" className="px-3">
-              Servizi
-            </Nav.Link> */}
+
             <Nav.Link as={Link} to="/creaprenotazione" className="px-3">
               Prenota
             </Nav.Link>
@@ -91,15 +87,15 @@ const NavbarComponent = () => {
               </>
             ) : (
               <>
-                <Nav.Link as={Link} to="/prenotazioni" className="px-3">
+                <Nav.Link as={Link} to="/prenotazioni" className={`px-3 `}>
                   Prenotazioni
                 </Nav.Link>
                 {isAdmin && (
-                  <Nav.Link as={Link} to="/utenti" className="px-3">
+                  <Nav.Link as={Link} to="/utenti" className={`px-3 ${isHome ? "nav-link-red" : "nav-link"}`}>
                     Utenti
                   </Nav.Link>
                 )}
-                <Nav.Link onClick={handleLogout} className="px-3 text-danger">
+                <Nav.Link onClick={handleLogout} className={`px-3 text-danger ${isHome ? "nav-link-red" : "nav-link"}`}>
                   Logout
                 </Nav.Link>
               </>
