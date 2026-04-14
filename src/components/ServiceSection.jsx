@@ -8,57 +8,51 @@ const ServiceSection = () => {
   const servizi = [
     {
       id: 1,
-      titolo: "Allenamento Personalizzato",
+      titolo: "Piano di Allenamento Personalizzato",
       descrizione: "Pianificazione di un ciclo di allenamenti o aggiornamento della scheda precedente.",
       dettagli: [
-        "**Valutazione iniziale**: Durante il primo incontro analizziamo il tuo stato fisico attuale, i tuoi obiettivi e le tue abitudini di allenamento.",
-        "**Miglioramento della scheda**: Se hai già un programma di allenamento, lo ottimizziamo per renderlo più efficace e su misura per te.",
-        "**Strategie personalizzate**: Ti forniamo consigli specifici su esercizi, alimentazione e recupero, basati sulle tue necessità.",
-        "**Supporto continuo**: Dopo la consulenza, offriamo un follow-up per verificare i progressi e fare eventuali aggiustamenti."
+        "**Valutazione iniziale**: Durante il primo incontro analizziamo il livello di allenamento, il punto di partenza e tracciamo la direzione da intraprendere.",
+        "**Programmazione**: Struttura del piano di allenamento su 8 settimane, personalizzato per durata, tipologia e impegni quotidiani.",
+        "**Supporto continuo**: Comunicazione costante ed eventuale follow-up per aggiustamenti durante il percorso.",
+        "**Check up finale**: Valutazione alla fine del percorso ed eventuale pianificazione del proseguimento."
       ],
       img: "/src/assets/images/consulenza.jpg"
     },
     {
       id: 2,
-      titolo: "Massaggio Rilassante",
+      titolo: "Massaggi",
       descrizione: "Massaggio rilassante per alleviare lo stress.",
       dettagli: [
-        "**Rilassamento profondo**: Questo massaggio aiuta a sciogliere le tensioni accumulate e favorisce un senso di benessere generale.",
-        "**Riduzione dello stress**: Tecniche di massaggio mirate migliorano la circolazione sanguigna e riducono i livelli di cortisolo.",
-        "**Oli essenziali**: Usiamo oli naturali con proprietà rilassanti, come lavanda e camomilla, per amplificare i benefici.",
-        "**Miglioramento del sonno**: Un massaggio rilassante può aiutare a ridurre l'insonnia e migliorare la qualità del riposo."
+        "**Massaggio rilassante**: Prenditi cura di te e goditi un massaggio completo per ridurre lo stress e le tensioni emotive. 30 min | 1h",
+        "**Massaggio sportivo**: Tecniche manuali per favorire il recupero post esercizio o sciogliere contratture muscolari. 30 min | 1h"
       ],
       img: "/src/assets/images/rilassante.jpg"
     },
     {
       id: 3,
-      titolo: "Massaggio Sportivo",
-      descrizione: "Trattamento decontratturante per atleti.",
+      titolo: "Personal Training",
+      descrizione: "Allenamento 1 a 1",
       dettagli: [
-        "**Prevenzione degli infortuni**: Tecniche specifiche migliorano la flessibilità e riducono il rischio di lesioni muscolari.",
-        "**Recupero accelerato**: Aiuta a eliminare l'acido lattico e migliora la circolazione per un recupero più rapido dopo l'allenamento.",
-        "**Adatto a tutti**: Non solo per atleti, ma anche per chiunque soffra di tensioni muscolari e voglia migliorare la mobilità.",
-        "**Massaggio mirato**: Personalizziamo il trattamento in base alle esigenze, concentrandoci sulle aree più soggette a stress e tensione."
+        "**Seduta di allenamento 1 a 1.**: Tecniche specifiche migliorano la flessibilità e riducono il rischio di lesioni muscolari.",
+        "**Allenamento individuale per calciatori - tecnica individuale - Ball Mastery (min.10 anni)**: ",
+        "**Allenamento per bambini 8+**:",
+        "**Allenamento cognitivo per anziani**: "
       ],
       img: "/src/assets/images/decontratturante.jpg"
     },
     {
       id: 4,
       titolo: "Trattamento infortuni",
-      descrizione: "Tecnica non invasiva per il supporto muscolare e articolare.",
+      descrizione: "Percorso personalizzato per il recupero da infortuni, mirato a ripristinare mobilità, forza e funzionalità in sicurezza.",
       dettagli: [
-        "**Sostegno muscolare**: I cerotti aiutano a stabilizzare i muscoli senza limitare il movimento.",
-        "**Riduzione del dolore**: Stimola i recettori cutanei per diminuire la percezione del dolore nelle zone trattate.",
-        "**Miglioramento della circolazione**: Favorisce il drenaggio linfatico e riduce il gonfiore in caso di traumi o infiammazioni.",
+        "**Recupero post-infortunio**: Sedute 1 a 1 per recuperare lo stato di forma pre infortunio in accordo con il tuo fisioterapista",
+        "**Gestione delle problematiche**: Trattamento di problemi articolari o muscolari tramite il movimento",
+        "**Applicazione tape kinesiologico**: Favorisce il drenaggio linfatico e riduce il gonfiore a seguito di traumi o infiammazioni.",
         "**Adatto a varie esigenze**: Utile in ambito sportivo, posturale o riabilitativo, per adulti e bambini."
       ],
       img: "/src/assets/images/taping.avif"
     }
   ];
-
-  // const isVisible = () => {
-  //   return localStorage.getItem("jwtToken") ? true : false;
-  // };
 
   const toggleService = (id) => {
     setOpenService(openService === id ? null : id);

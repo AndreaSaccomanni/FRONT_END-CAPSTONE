@@ -78,7 +78,7 @@ const FormContattami = () => {
       </Form>
 
       {inviato && <p className="mt-3 text-success">Messaggio inviato con successo!</p>}
-      {errore && <p className="mt-3 text-danger">Errore nell'invio. Riprova più tardi.</p>}
+      {errore && <p className="mt-3 text-danger">Errore nell'invio dell'email.</p>}
     </Container>
   );
 };

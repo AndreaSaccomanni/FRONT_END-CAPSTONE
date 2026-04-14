@@ -70,7 +70,7 @@ const ChiSono = () => {
 
   return (
     <Container className=" chi-sono-container">
-      <Row className="mb-5 align-items-center">
+      <Row className=" align-items-center">
         {/* Colonna Immagine */}
         <Col md={4} className="text-center my-2">
           <Image

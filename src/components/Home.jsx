@@ -21,10 +21,10 @@ const Home = () => {
         <ChiSono />
       </section>
 
-      <MotivationalCarousel />
+      {/* <MotivationalCarousel /> */}
 
       {/*---- VIDEO DI SFONDO -----*/}
-      <section className="sezione-video-bg text-center mt-4 pb-2 position-relative">
+      <section className="sezione-video-bg text-center pb-2 position-relative">
         <video autoPlay muted loop className="video-background ">
           <source src={videoSfondo} type="video/mp4" />
         </video>
