@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Card, Button } from "react-bootstrap";
+import { Container, Row, Col, Card, Button, Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const ServiceSection = () => {
   const [openService, setOpenService] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   const servizi = [
     {
@@ -59,6 +61,15 @@ const ServiceSection = () => {
   };
 
   useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -89,7 +100,18 @@ const ServiceSection = () => {
               <Card.Body>
                 <Card.Title className="text-center">{servizio.titolo}</Card.Title>
                 <Card.Text className="text-center">{servizio.descrizione}</Card.Text>
-                <Button variant="link" className="d-block mx-auto mt-2 text-decoration-none link-arancione" onClick={() => toggleService(servizio.id)}>
+                <Button
+                  variant="link"
+                  className="d-block mx-auto mt-2 text-decoration-none link-arancione"
+                  onClick={() => {
+                    if (isMobile) {
+                      setOpenService(servizio.id);
+                      setIsModalOpen(true);
+                    } else {
+                      toggleService(servizio.id);
+                    }
+                  }}
+                >
                   {openService === servizio.id ? "Nascondi dettagli" : "Scopri di più"}
                 </Button>
               </Card.Body>
@@ -98,23 +120,53 @@ const ServiceSection = () => {
         ))}
       </Row>
 
-      {/* Sezione Descrizione Dettagliata con Collapse */}
-      <Row className="mt-5">
-        <Col>
-          {servizi.map((servizio) =>
-            openService === servizio.id ? (
-              <div key={servizio.id} className="dettagli-container">
-                <h3 className="text-center mt-4">{servizio.titolo}</h3>
-                <ul className="text-muted text-center list-unstyled">
-                  {servizio.dettagli.map((dettaglio, index) => (
-                    <li key={index} className="mb-2" dangerouslySetInnerHTML={{ __html: dettaglio.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>") }} />
+      {/* Sezione Descrizione Dettagliata - Solo Desktop */}
+      {!isMobile && (
+        <Row className="mt-5">
+          <Col>
+            {servizi.map((servizio) =>
+              openService === servizio.id ? (
+                <div key={servizio.id} className="dettagli-container">
+                  <h3 className="text-center mt-4">{servizio.titolo}</h3>
+                  <ul className="text-muted text-center list-unstyled">
+                    {servizio.dettagli.map((dettaglio, index) => (
+                      <li key={index} className="mb-2" dangerouslySetInnerHTML={{ __html: dettaglio.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>") }} />
+                    ))}
+                  </ul>
+                </div>
+              ) : null
+            )}
+          </Col>
+        </Row>
+      )}
+
+      {/* Modale per Mobile */}
+      {isMobile && (
+        <Modal
+          show={isModalOpen}
+          onHide={() => {
+            setIsModalOpen(false);
+            setOpenService(null);
+          }}
+          centered
+          className="modal-dark"
+        >
+          <Modal.Header closeButton className="border-0" style={{ backgroundColor: "#1a1a1a", color: "white" }}>
+            <Modal.Title className="w-100 text-center">{servizi.find((s) => s.id === openService)?.titolo}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body style={{ backgroundColor: "#1a1a1a", color: "white" }}>
+            {servizi.find((s) => s.id === openService) && (
+              <ul className="list-unstyled">
+                {servizi
+                  .find((s) => s.id === openService)
+                  .dettagli.map((dettaglio, index) => (
+                    <li key={index} className="mb-3" dangerouslySetInnerHTML={{ __html: dettaglio.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>") }} />
                   ))}
-                </ul>
-              </div>
-            ) : null
-          )}
-        </Col>
-      </Row>
+              </ul>
+            )}
+          </Modal.Body>
+        </Modal>
+      )}
 
       {/* Pulsante Prenota o Messaggio Login */}
       {/* <Row className="mt-5">

@@ -5,6 +5,8 @@ body,
   height: 100%;
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 h1,
@@ -26,6 +28,8 @@ p {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 /* Il contenuto principale occupa lo spazio disponibile */
@@ -37,6 +41,7 @@ p {
 body {
   background: black;
   color: #f8f9fa;
+  overflow-x: hidden;
 }
 
 /*------------- SERVIZI ---------------*/
@@ -386,6 +391,17 @@ ul li {
 @media (max-width: 768px) {
   .foto-profilo {
     margin-bottom: 20px;
+    display: none;
+  }
+}
+@media (max-width: 768px) {
+  .chiSono {
+    color: #ff8c00 !important;
+    font-size: 6rem;
+    margin-bottom: 0px !important;
+  }
+  .presentazione {
+    text-align: center;
   }
 }
 
@@ -470,7 +486,10 @@ ul li {
 
 @media (max-width: 477px) {
   .navbar-brand {
-    font-size: 1.7rem !important;
+    font-size: 1.2rem !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .navbar-toggler {
     margin-left: 40%;
@@ -480,17 +499,26 @@ ul li {
 
 @media (max-width: 465px) {
   .navbar-brand {
-    font-size: 1.5rem !important;
+    font-size: 1rem !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 @media (max-width: 425px) {
   .navbar-brand {
-    font-size: 1.5rem !important;
+    font-size: 0.9rem !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 @media (max-width: 310px) {
   .navbar-brand {
-    font-size: 0.8rem !important;
+    font-size: 0.7rem !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
@@ -724,8 +752,8 @@ ul li {
 .whatsapp {
   position: fixed;
   z-index: 1000;
-  top: 90%;
-  right: 20px;
+  bottom: 5%;
+  right: 15px;
   border-radius: 50%;
 }
 .whatsapp:hover {
@@ -733,6 +761,23 @@ ul li {
   transform: scale(1.5);
   transition: transform 0.07s ease;
   box-shadow: 0px 0px 15px rgba(2, 249, 64, 0.851);
+}
+
+@media (max-width: 576px) {
+  .whatsapp {
+    position: fixed;
+    z-index: 1000;
+    bottom: 5%;
+    right: 12px;
+    border-radius: 50%;
+  }
+}
+
+@media (max-width: 375px) {
+  .whatsapp {
+    bottom: 5%;
+    right: 10px;
+  }
 }
 
 .motivational-carousel img {
@@ -757,12 +802,6 @@ ul li {
 
 /* Spaziatura tra i componenti nella Home per schermi piccoli (telefoni) */
 @media (max-width: 576px) {
-  /* Applica 100px di spazio verticale tra i figli principali della home
-     esclude elementi con classe .whatsapp che sono posizionati fixed */
-  .home-container > *:not(.whatsapp) {
-    margin-bottom: 100px;
-  }
-
   /* Se vuoi che l'ultimo elemento non abbia margin-bottom aggiuntivo */
   .home-container > *:not(.whatsapp):last-child {
     margin-bottom: 0;
@@ -802,7 +841,6 @@ ul li {
       display: block;
       margin-left: 0;
       margin-right: 0;
-      margin-bottom: 100px; /* required spacing between blocks */
     }
 
     /* Reduce the card heights and image sizes on mobile for better fit */
@@ -820,6 +858,7 @@ ul li {
     .home-container #next-section .col {
       display: block !important;
       width: 100% !important;
+      margin-bottom: 0px !important;
     }
 
     /* ChiSono adjustments inside Home only */
@@ -832,14 +871,16 @@ ul li {
     .home-container .sezione-video-bg {
       position: relative;
       padding-bottom: 1rem;
+      overflow: hidden;
     }
 
     .home-container .sezione-video-bg .video-background,
     .home-container .sezione-video-bg video.video-background {
-      position: relative;
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
-      height: auto;
-      max-height: 240px;
+      height: 100%;
       object-fit: cover;
       opacity: 0.6;
     }
@@ -860,5 +901,65 @@ ul li {
       font-size: calc(1rem + 1.5vw);
       line-height: 1.2;
     }
+
+    .contenuto-form {
+      padding: 1rem 0.5rem;
+    }
+
+    /* Hero section: full viewport height on all screen sizes */
+    .home-container .hero-section {
+      height: 100vh !important;
+      min-height: 100vh !important;
+      padding: 0 !important;
+      overflow: hidden;
+    }
   }
+}
+
+/* Tablet and larger screens: ensure hero section is full viewport */
+@media (min-width: 577px) and (max-width: 1024px) {
+  .home-container .hero-section {
+    height: 100vh !important;
+    min-height: 100vh !important;
+    padding: 0 !important;
+    overflow: hidden;
+  }
+}
+
+/* ----------- MODAL SERVIZI MOBILE ----------- */
+/* Stile modale nero per servizi su mobile */
+.modal-dark .modal-content {
+  background-color: #1a1a1a !important;
+  border: 1px solid rgba(255, 140, 0, 0.3);
+  border-radius: 15px;
+}
+
+.modal-dark .modal-header {
+  border-bottom: 1px solid rgba(255, 140, 0, 0.2) !important;
+}
+
+.modal-dark .modal-title {
+  color: #ff8c00 !important;
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+
+.modal-dark .btn-close {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+.modal-dark .modal-body {
+  color: #f8f9fa;
+}
+
+.modal-dark .modal-body li {
+  color: #f8f9fa;
+  text-align: left;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.modal-dark .modal-body strong {
+  color: #ff8c00;
+  font-weight: 600;
 }
