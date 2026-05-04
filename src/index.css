@@ -47,24 +47,28 @@ body {
   padding: 50px 0;
   border-radius: 10px;
   border: solid 0.2px #522e03;
-  margin-bottom: -24px;
+  /* margin-bottom: -24px; */
 }
 
 /* Stile delle card con effetto luce */
 .fixedCard {
-  max-width: 300px;
-  margin: auto;
+  width: 100%; /* occupy full column width */
+  min-height: 420px; /* allow cards to grow if content requires more space */
+  display: flex;
+  flex-direction: column;
   background: linear-gradient(180deg, #2e3338 0%, #343a40 100%);
   color: #f8f9fa;
   border: none;
   border-radius: 15px;
   box-shadow: 0px 0px 15px rgba(255, 140, 0, 0.2); /* Neon arancione dietro la card */
-  transition: transform 0.3s, box-shadow 0.3s;
+  transition:
+    transform 0.3s,
+    box-shadow 0.3s;
 }
 
 .fixedCard:hover {
   box-shadow: 0px 0px 25px rgba(255, 140, 0, 0.6); /* Effetto neon arancione più forte al passaggio */
-  transform: /*translateY(-10px)*/ scale(1.1);
+  transform: /*translateY(-10px)*/ scale(1.05);
 }
 
 /* Immagini con bordi squadrati sotto */
@@ -74,6 +78,7 @@ body {
   width: 100%;
   border-radius: 10px 10px 0 0;
   transition: opacity 0.3s;
+  flex-shrink: 0;
 }
 
 .fixedCard:hover img {
@@ -102,6 +107,21 @@ body {
   padding: 1.5rem;
   position: relative;
   z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1 1 auto; /* expand to fill remaining card height */
+  overflow: visible; /* allow content to expand the card instead of scrolling */
+}
+
+/* Ensure column wrappers stretch so cards in the same row match heights */
+.card-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-wrapper .fixedCard {
+  flex: 1 1 auto;
 }
 
 .fixedCard .card-title,
@@ -135,6 +155,12 @@ h3 {
   box-shadow: 0px 0px 10px rgba(255, 140, 0, 0.2); /* Neon arancione dietro la descrizione */
 }
 
+/* Dettagli: no transition - apparizione/chiusura istantanea */
+.dettagli-container {
+  opacity: 1;
+  transform: none;
+}
+
 /* testo nella lista dettagli */
 .dettagli-container ul li {
   font-size: 1.1rem;
@@ -146,7 +172,9 @@ h3 {
   background: linear-gradient(45deg, #ff8c00, #ff4500);
   border: none;
   color: #ffffff;
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  transition:
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
 }
 
 .btn-primary:hover {
@@ -158,7 +186,9 @@ h3 {
   color: #ff8c00 !important;
   text-decoration: none;
   font-weight: bold;
-  transition: color 0.3s ease, text-shadow 0.3s ease;
+  transition:
+    color 0.3s ease,
+    text-shadow 0.3s ease;
 }
 
 .link-arancione:hover {
@@ -170,7 +200,9 @@ h3 {
   color: #a30606 !important;
   text-decoration: none;
   font-weight: bold;
-  transition: color 0.3s ease, text-shadow 0.3s ease;
+  transition:
+    color 0.3s ease,
+    text-shadow 0.3s ease;
 }
 
 .link-rosso:hover {
@@ -181,7 +213,9 @@ h3 {
 /*EFFETTI SULLE CARD*/
 .card-wrapper {
   opacity: 0;
-  transition: transform 1s ease, opacity 1.5s ease;
+  transition:
+    transform 1s ease,
+    opacity 1.5s ease;
 }
 
 .from-left {
@@ -298,7 +332,9 @@ h3 {
 .fade-image {
   opacity: 0;
   transform: scale(0.95);
-  transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+  transition:
+    opacity 1.2s ease-out,
+    transform 1.2s ease-out;
 }
 
 .fade-image.visible {
@@ -379,8 +415,57 @@ ul li {
   box-shadow: none !important;
 }
 
+/* Forza l'icona del toggler della navbar in bianco (override Bootstrap) */
+.navbar .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=UTF8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255,1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important;
+}
+
+/* Assicuriamoci che il bottone toggler abbia testo/icone bianchi */
+.navbar .btn,
+.navbar .navbar-toggler {
+  color: #fff !important;
+}
+
+/* Offcanvas mobile menu styling (black background + white links) */
+#offcanvasNav.offcanvas,
+#offcanvasNav.offcanvas-start {
+  background: #000; /* black background */
+  color: #fff;
+}
+
+#offcanvasNav .offcanvas-header,
+#offcanvasNav .offcanvas-body {
+  background: transparent;
+  color: #fff;
+}
+
+#offcanvasNav .offcanvas-title {
+  color: #fff;
+  font-weight: 700;
+}
+
+#offcanvasNav .nav-link {
+  color: #fff !important;
+  padding: 0.5rem 0;
+}
+
+#offcanvasNav .nav-link:hover,
+#offcanvasNav .nav-link:focus {
+  color: #ff8c00 !important; /* accent on hover */
+  text-decoration: none;
+}
+
+/* Make sure close button is visible on dark background */
+#offcanvasNav .btn-close {
+  filter: invert(1) hue-rotate(180deg);
+}
+
 .navbar-dark {
   background-color: black !important;
+}
+
+.navbar-toggler-icon {
+  color: white !important;
 }
 
 @media (max-width: 477px) {
@@ -389,6 +474,7 @@ ul li {
   }
   .navbar-toggler {
     margin-left: 40%;
+    color: white !important;
   }
 }
 
@@ -410,12 +496,16 @@ ul li {
 
 .nav-link {
   color: white !important;
-  transition: transform 0.2s ease, color 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease;
   display: inline-block;
 }
 .nav-link-red {
-  color: black !important;
-  transition: transform 0.2s ease, color 0.2s ease;
+  color: rgb(255, 4, 4) !important;
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease;
   display: inline-block;
 }
 .nav-link:hover {
@@ -425,6 +515,7 @@ ul li {
   box-shadow: 0px 0px 15px rgba(255, 140, 0, 0.8);
 }
 .nav-link-red:hover {
+  color: black !important;
   transform: scale(1.1);
   background-color: #ff8c00;
   border-radius: 10px;
@@ -471,7 +562,9 @@ ul li {
 .footer-social {
   color: #ff8c00;
   font-size: 1.5rem;
-  transition: transform 0.3s ease, text-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    text-shadow 0.3s ease;
 }
 
 .footer-social:hover {
@@ -488,7 +581,9 @@ ul li {
   color: red;
   cursor: pointer;
   font-size: 1.2rem;
-  transition: transform 0.2s ease, color 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease;
 }
 
 .icon-delete:hover {
@@ -504,7 +599,9 @@ ul li {
 .icona-mappa {
   color: #ff8c00;
   cursor: pointer;
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  transition:
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
 }
 
 .icona-mappa:hover {
@@ -616,6 +713,13 @@ ul li {
   transition: transform 0.07s ease;
 }
 
+/* Mostra il cursore personalizzato solo su desktop più larghi di 1024px */
+@media (max-width: 1024px) {
+  .cursor-follower {
+    display: none !important;
+  }
+}
+
 /* --------- ICONA WHATSAPP --------*/
 .whatsapp {
   position: fixed;
@@ -631,7 +735,6 @@ ul li {
   box-shadow: 0px 0px 15px rgba(2, 249, 64, 0.851);
 }
 
-/* ------ CAROSELLO ------*/
 .motivational-carousel img {
   object-fit: cover;
   width: 100%;
@@ -650,4 +753,112 @@ ul li {
   font-style: italic;
   text-align: left;
   font-size: 3rem;
+}
+
+/* Spaziatura tra i componenti nella Home per schermi piccoli (telefoni) */
+@media (max-width: 576px) {
+  /* Applica 100px di spazio verticale tra i figli principali della home
+     esclude elementi con classe .whatsapp che sono posizionati fixed */
+  .home-container > *:not(.whatsapp) {
+    margin-bottom: 100px;
+  }
+
+  /* Se vuoi che l'ultimo elemento non abbia margin-bottom aggiuntivo */
+  .home-container > *:not(.whatsapp):last-child {
+    margin-bottom: 0;
+  }
+
+  /* responsive per la home con schermi piccoli*/
+  /* ============================
+     Mobile-specific rules for Home
+     Targets only elements inside .home-container (phones)
+     ============================ */
+  @media (max-width: 576px) {
+    /* General container spacing and readable padding */
+    .home-container {
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+
+    /* Make hero flow naturally (no full viewport forced) */
+    .home-container .hero-section {
+      height: auto !important;
+      min-height: 50vh;
+      padding: 2rem 0;
+      background-position: center top;
+      overflow: visible;
+    }
+
+    /* Neutralize full-screen helpers used in Home only */
+    .home-container .vh-100 {
+      height: auto !important;
+      min-height: auto !important;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+    }
+
+    /* Sections stack vertically and have consistent spacing (100px) */
+    .home-container > *:not(.whatsapp) {
+      display: block;
+      margin-left: 0;
+      margin-right: 0;
+      margin-bottom: 100px; /* required spacing between blocks */
+    }
+
+    /* Reduce the card heights and image sizes on mobile for better fit */
+    .home-container .fixedCard {
+      min-height: 360px;
+    }
+
+    .home-container .fixedCard img {
+      height: 160px;
+    }
+
+    /* ServiceSection wrapper: avoid horizontal centering that can break layout */
+    .home-container #next-section,
+    .home-container #next-section .row,
+    .home-container #next-section .col {
+      display: block !important;
+      width: 100% !important;
+    }
+
+    /* ChiSono adjustments inside Home only */
+    .home-container .chi-sono-container {
+      padding: 1rem;
+      margin: 0 auto;
+    }
+
+    /* Video background: limit height for mobile and keep it responsive */
+    .home-container .sezione-video-bg {
+      position: relative;
+      padding-bottom: 1rem;
+    }
+
+    .home-container .sezione-video-bg .video-background,
+    .home-container .sezione-video-bg video.video-background {
+      position: relative;
+      width: 100%;
+      height: auto;
+      max-height: 240px;
+      object-fit: cover;
+      opacity: 0.6;
+    }
+
+    .home-container .contenuto-form {
+      padding: 1rem 0.5rem;
+    }
+
+    /* Ensure fixed elements like whatsapp remain visible and not affected by margins */
+    .home-container .whatsapp {
+      position: fixed;
+    }
+
+    /* Make sure hero text scales down */
+    .home-container h1,
+    .home-container h2,
+    .home-container h3 {
+      font-size: calc(1rem + 1.5vw);
+      line-height: 1.2;
+    }
+  }
 }

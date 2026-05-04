@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col, Card, Button, Collapse } from "react-bootstrap";
+import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const ServiceSection = () => {
@@ -101,9 +101,9 @@ const ServiceSection = () => {
       {/* Sezione Descrizione Dettagliata con Collapse */}
       <Row className="mt-5">
         <Col>
-          {servizi.map((servizio) => (
-            <Collapse key={servizio.id} in={openService === servizio.id}>
-              <div className="dettagli-container">
+          {servizi.map((servizio) =>
+            openService === servizio.id ? (
+              <div key={servizio.id} className="dettagli-container">
                 <h3 className="text-center mt-4">{servizio.titolo}</h3>
                 <ul className="text-muted text-center list-unstyled">
                   {servizio.dettagli.map((dettaglio, index) => (
@@ -111,8 +111,8 @@ const ServiceSection = () => {
                   ))}
                 </ul>
               </div>
-            </Collapse>
-          ))}
+            ) : null
+          )}
         </Col>
       </Row>
 

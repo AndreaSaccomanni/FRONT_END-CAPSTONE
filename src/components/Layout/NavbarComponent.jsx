@@ -1,6 +1,6 @@
 // src/components/Layout/NavbarComponent.jsx
 import React, { useEffect, useState } from "react";
-import { Navbar, Nav, Container } from "react-bootstrap";
+import { Navbar, Nav, Container, Offcanvas, Button } from "react-bootstrap";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "/src/assets/images/logo.webp";
 
@@ -48,6 +48,10 @@ const NavbarComponent = () => {
 
   const isHome = location.pathname === "/";
 
+  const [showOffcanvas, setShowOffcanvas] = useState(false);
+  const handleCloseOffcanvas = () => setShowOffcanvas(false);
+  const handleShowOffcanvas = () => setShowOffcanvas(true);
+
   return (
     <Navbar expand="md" className={`navbar-gradient py-3 px-3 ${isHome ? "navbar-transparent text-light" : "navbar-dark"}`}>
       <Container fluid>
@@ -60,7 +64,11 @@ const NavbarComponent = () => {
           />
           Alessandro Saccomanni - PT
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        {/* Custom toggler for mobile: opens Offcanvas. Keep it only on small screens (Navbar expand="md") */}
+        <Button variant="link" className="d-md-none p-0" onClick={handleShowOffcanvas} aria-controls="offcanvasNav" aria-label="Apri menu">
+          <span className="navbar-toggler-icon" />
+        </Button>
+
         <Navbar.Collapse id="basic-navbar-nav" className="w-100 justify-content-between">
           <Nav className="me-auto text-center">
             <Nav.Link as={Link} to="/" className="px-3">
@@ -75,7 +83,7 @@ const NavbarComponent = () => {
               Prenota
             </Nav.Link>
           </Nav>
-          <Nav className="text-center">
+          <Nav className="text-center d-none d-md-flex">
             {!isAuthenticated ? (
               <>
                 <Nav.Link as={Link} to="/login" className={`px-3 ${isHome ? "nav-link-red" : "nav-link"}`}>
@@ -102,6 +110,59 @@ const NavbarComponent = () => {
             )}
           </Nav>
         </Navbar.Collapse>
+
+        {/* Offcanvas for mobile menu */}
+        <Offcanvas show={showOffcanvas} onHide={handleCloseOffcanvas} placement="start" id="offcanvasNav">
+          <Offcanvas.Header closeButton>
+            <Offcanvas.Title>Menu</Offcanvas.Title>
+          </Offcanvas.Header>
+          <Offcanvas.Body>
+            <Nav className="flex-column">
+              <Nav.Link as={Link} to="/" onClick={handleCloseOffcanvas}>
+                Home
+              </Nav.Link>
+              <Nav.Link as={Link} to="/indirizzo" onClick={handleCloseOffcanvas}>
+                Indirizzi
+              </Nav.Link>
+              <Nav.Link as={Link} to="/creaprenotazione" onClick={handleCloseOffcanvas}>
+                Prenota
+              </Nav.Link>
+
+              <hr />
+
+              {!isAuthenticated ? (
+                <>
+                  <Nav.Link as={Link} to="/login" onClick={handleCloseOffcanvas}>
+                    Login
+                  </Nav.Link>
+                  <Nav.Link as={Link} to="/registrazione" onClick={handleCloseOffcanvas}>
+                    Registrati
+                  </Nav.Link>
+                </>
+              ) : (
+                <>
+                  <Nav.Link as={Link} to="/prenotazioni" onClick={handleCloseOffcanvas}>
+                    Prenotazioni
+                  </Nav.Link>
+                  {isAdmin && (
+                    <Nav.Link as={Link} to="/utenti" onClick={handleCloseOffcanvas}>
+                      Utenti
+                    </Nav.Link>
+                  )}
+                  <Nav.Link
+                    onClick={() => {
+                      handleCloseOffcanvas();
+                      handleLogout();
+                    }}
+                    className="text-danger"
+                  >
+                    Logout
+                  </Nav.Link>
+                </>
+              )}
+            </Nav>
+          </Offcanvas.Body>
+        </Offcanvas>
       </Container>
     </Navbar>
   );
