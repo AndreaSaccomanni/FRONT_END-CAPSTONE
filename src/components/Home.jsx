@@ -3,7 +3,7 @@ import ChiSono from "./ChiSono";
 import ServiceSection from "./ServiceSection";
 import FormContattami from "./FormContattami";
 import HeroSection from "./HeroSection";
-import videoSfondo from "/src/assets/video/videoSfondo2.mp4";
+import videoSfondo from "../assets/video/videoSfondo2.mp4";
 import WhatsappIcon from "./WhatsappIcon";
 import MotivationalCarousel from "./MotivationalCarusel";
 

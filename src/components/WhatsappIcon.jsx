@@ -1,4 +1,4 @@
-const logoWhatsapp = "/assets/images/logoWhatsapp.png";
+const logoWhatsapp = `${import.meta.env.BASE_URL}assets/images/logoWhatsapp.png`;
 const WhatsappIcon = () => {
   return (
     <>
