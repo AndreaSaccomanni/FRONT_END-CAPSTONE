@@ -1,9 +1,10 @@
 import React from "react";
 import { Carousel, Col, Container, Row } from "react-bootstrap";
-import img1 from "/src/assets/images/partenza.avif";
-import img2 from "/src/assets/images/scalata.avif";
-import img3 from "/src/assets/images/passo.avif";
-import img4 from "/src/assets/images/traguardo2.avif";
+
+const img1 = "/assets/images/partenza.avif";
+const img2 = "/assets/images/scalata.avif";
+const img3 = "/assets/images/passo.avif";
+const img4 = "/assets/images/traguardo2.avif";
 
 const MotivationalCarousel = () => {
   const slides = [

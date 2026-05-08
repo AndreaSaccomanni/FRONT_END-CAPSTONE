@@ -273,7 +273,7 @@ h3 {
 .hero-section {
   height: 100vh; /* tutta l'altezza dello schermo */
   width: 100%;
-  background-image: url("/src/assets/images/sfondoHome.jpg");
+  background-image: url("/assets/images/sfondoHome.jpg");
   background-size: cover;
   background-position: center;
   position: relative;

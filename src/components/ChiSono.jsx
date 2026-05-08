@@ -74,7 +74,7 @@ const ChiSono = () => {
         {/* Colonna Immagine */}
         <Col md={4} className="text-center my-2">
           <Image
-            src="/src/assets/images/immagineProfilo.jpg"
+            src="/assets/images/immagineProfilo.jpg"
             alt="Alessandro Saccomanni"
             ref={imageRef}
             className={`foto-profilo mt-5 fade-image ${imageVisible ? "visible" : ""}`}

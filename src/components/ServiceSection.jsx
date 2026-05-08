@@ -18,7 +18,7 @@ const ServiceSection = () => {
         "**Supporto continuo**: Comunicazione costante ed eventuale follow-up per aggiustamenti durante il percorso.",
         "**Check up finale**: Valutazione alla fine del percorso ed eventuale pianificazione del proseguimento."
       ],
-      img: "/src/assets/images/consulenza.jpg"
+      img: "/assets/images/consulenza.jpg"
     },
     {
       id: 2,
@@ -28,7 +28,7 @@ const ServiceSection = () => {
         "**Massaggio rilassante**: Prenditi cura di te e goditi un massaggio completo per ridurre lo stress e le tensioni emotive. 30 min | 1h",
         "**Massaggio sportivo**: Tecniche manuali per favorire il recupero post esercizio o sciogliere contratture muscolari. 30 min | 1h"
       ],
-      img: "/src/assets/images/rilassante.jpg"
+      img: "/assets/images/rilassante.jpg"
     },
     {
       id: 3,
@@ -40,7 +40,7 @@ const ServiceSection = () => {
         "**Allenamento per bambini 8+**:",
         "**Allenamento cognitivo per anziani**: "
       ],
-      img: "/src/assets/images/decontratturante.jpg"
+      img: "/assets/images/decontratturante.jpg"
     },
     {
       id: 4,
@@ -52,7 +52,7 @@ const ServiceSection = () => {
         "**Applicazione tape kinesiologico**: Favorisce il drenaggio linfatico e riduce il gonfiore a seguito di traumi o infiammazioni.",
         "**Adatto a varie esigenze**: Utile in ambito sportivo, posturale o riabilitativo, per adulti e bambini."
       ],
-      img: "/src/assets/images/taping.avif"
+      img: "/assets/images/taping.avif"
     }
   ];
 
