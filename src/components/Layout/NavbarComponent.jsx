@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Navbar, Nav, Container, Offcanvas, Button } from "react-bootstrap";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-const logo = `${import.meta.env.BASE_URL}assets/images/logo.webp`;
+const logo = `${import.meta.env.BASE_URL}logo.webp`;
 
 const NavbarComponent = () => {
   // !! --> per restituire sempre true o false, è come se fosse useState(Boolean(localStorage.getItem("jwtToken")))

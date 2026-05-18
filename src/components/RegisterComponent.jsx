@@ -57,31 +57,31 @@ const RegisterComponent = () => {
           {error && <div className="alert alert-danger">{error}</div>}
           {successMessage && <div className="alert alert-success">{successMessage}</div>}
           <Form onSubmit={handleRegister}>
-            <Form.Group controlId="nome">
+            <Form.Group controlId="nome" className="mt-2">
               <Form.Label>Nome</Form.Label>
               <Form.Control type="text" placeholder="Inserisci il tuo nome" value={nome} onChange={(e) => setNome(e.target.value)} required />
             </Form.Group>
-            <Form.Group controlId="cognome">
+            <Form.Group controlId="cognome" className="mt-2">
               <Form.Label>Cognome</Form.Label>
               <Form.Control type="text" placeholder="Inserisci il tuo cognome" value={cognome} onChange={(e) => setCognome(e.target.value)} required />
             </Form.Group>
-            <Form.Group controlId="dataDiNascita">
+            <Form.Group controlId="dataDiNascita" className="mt-2">
               <Form.Label>Data di Nascita</Form.Label>
               <Form.Control type="date" value={dataDiNascita} onChange={(e) => setDataDiNascita(e.target.value)} />
             </Form.Group>
-            <Form.Group controlId="username">
+            <Form.Group controlId="username" className="mt-2">
               <Form.Label>Username</Form.Label>
               <Form.Control type="text" placeholder="Inserisci il tuo username" value={username} onChange={(e) => setUsername(e.target.value)} required />
             </Form.Group>
-            <Form.Group controlId="email">
+            <Form.Group controlId="email" className="mt-2">
               <Form.Label>Email</Form.Label>
               <Form.Control type="email" placeholder="Inserisci la tua email" value={email} onChange={(e) => setEmail(e.target.value)} required />
             </Form.Group>
-            <Form.Group controlId="password">
+            <Form.Group controlId="password" className="mt-2">
               <Form.Label>Password</Form.Label>
               <Form.Control type="password" placeholder="Inserisci la tua password" value={password} onChange={(e) => setPassword(e.target.value)} required />
             </Form.Group>
-            <Form.Group controlId="confirmPassword">
+            <Form.Group controlId="confirmPassword" className="mt-2">
               <Form.Label>Conferma Password</Form.Label>
               <Form.Control
                 type="password"

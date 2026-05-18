@@ -83,7 +83,7 @@ const ChiSono = () => {
         </Col>
 
         {/* Colonna Testo */}
-        <Col md={8} className="pe-5 text-start">
+        <Col md={8} className=" text-start">
           <div ref={paragrafoRef} className={`card-wrapper from-right ${paragrafoVisibile ? "show" : ""}`}>
             <div>
               <h2 ref={titleRef} className={`mb-5 fw-bold pb-3 text-center chiSono ${titleVisible ? "visible" : ""}`}>
@@ -105,7 +105,7 @@ const ChiSono = () => {
             </p>
             <div className="d-flex align-items-center mt-5">
               <h4 className="mt-2 cursor-pointer">{/* <span className="icone-chiSono">📚</span>*/} Percorso di studi</h4>
-              <Button variant="warning" className="btn-md ms-4 " onClick={() => setOpenStudi(!openStudi)}>
+              <Button variant="warning" className="btn-md ms-auto ms-md-4  " onClick={() => setOpenStudi(!openStudi)}>
                 scopri di più
               </Button>
             </div>
@@ -113,7 +113,7 @@ const ChiSono = () => {
               <ul>
                 <li>
                   <div className="d-flex">
-                    <span className="me-2"> 📖 </span>{" "}
+                    <span className="me-2"> 📖 </span>
                     <span>
                       Laurea Triennale in Scienze motorie e Sportive presso
                       <strong> Università degli studi di Roma “Foro Italico”</strong>
@@ -123,7 +123,7 @@ const ChiSono = () => {
 
                 <li>
                   <div className="d-flex">
-                    <span className="me-2">🎓</span>{" "}
+                    <span className="me-2">🎓</span>
                     <span>
                       Laurea magistrale in Scienza e tecnica dello Sport presso
                       <strong> Università degli studi di Roma “Foro Italico”</strong>
@@ -131,29 +131,46 @@ const ChiSono = () => {
                   </div>
                 </li>
                 <li>
-                  <span className="me-2">🧘‍♂️</span>Massaggiatore sportivo CONI – <strong>Istituto ATS</strong>
+                  <div className="d-flex">
+                    <span className="me-2">🧘‍♂️</span>
+                    <span>
+                      Massaggiatore sportivo CONI – <strong>Istituto ATS</strong>
+                    </span>
+                  </div>
                 </li>
               </ul>
             </Collapse>
             <div className="d-flex align-items-center mt-4 ">
               <h4 className="mt-2 cursor-pointer">{/*<span className="icone-chiSono coppa">🏆</span>*/} Esperienze</h4>
-              <Button variant="warning" className="btn-md ms-4 " onClick={() => setOpenEsperienze(!openEsperienze)}>
+              <Button variant="warning" className="btn-md ms-auto ms-md-4 " onClick={() => setOpenEsperienze(!openEsperienze)}>
                 scopri di più
               </Button>
             </div>
             <Collapse in={openEsperienze}>
               <ul>
                 <li>
-                  <span className="me-2">✅</span>Istruttore Ginnastica Posturale presso Sporting Village 2.0
+                  <div className="d-flex">
+                    <span className="me-2">✅</span>
+                    <span>Istruttore Ginnastica Posturale presso Sporting Village 2.0</span>
+                  </div>
                 </li>
                 <li>
-                  <span className="me-2">✅</span>Istruttore attività motoria per l’età evolutiva
+                  <div className="d-flex">
+                    <span className="me-2">✅</span>
+                    <span>Istruttore attività motoria per l’età evolutiva</span>
+                  </div>
                 </li>
                 <li>
-                  <span className="me-2">✅</span>Massaggiatore
+                  <div className="d-flex">
+                    <span className="me-2">✅</span>
+                    <span>Massaggiatore</span>
+                  </div>
                 </li>
                 <li>
-                  <span className="me-2">✅</span>Trattamenti personalizzati per atleti e appassionati di fitness
+                  <div className="d-flex">
+                    <span className="me-2">✅</span>
+                    <span>Trattamenti personalizzati per atleti e appassionati di fitness</span>
+                  </div>
                 </li>
               </ul>
             </Collapse>

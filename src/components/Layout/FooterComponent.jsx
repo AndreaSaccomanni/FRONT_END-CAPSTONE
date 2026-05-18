@@ -14,7 +14,7 @@ const FooterComponent = () => {
         <hr className="footer-divider mb-3" />
         <Row className="justify-content-center text-center text-md-start">
           {/* Colonna Contatti */}
-          <Col md={4} className="mb-3 text-center">
+          <Col sm={6} md={4} className="mb-3 text-center">
             <h5 className="footer-title">CONTATTI</h5>
             <div className="d-flex align-items-center justify-content-center">
               <span className="contact-icon">📧</span>
@@ -26,7 +26,7 @@ const FooterComponent = () => {
             <div className="d-flex align-items-center justify-content-center mt-2">
               <span className="contact-icon">📞</span>
               <a href="tel:+393772082714" className="footer-link ms-2">
-                377 208 2714
+                +39 377 208 2714
               </a>
             </div>
 
@@ -42,9 +42,9 @@ const FooterComponent = () => {
           </Col>
 
           {/* Colonna Link Utili */}
-          <Col md={4} className="mb-3 text-center">
+          <Col sm={6} md={4} className="mb-3 text-center d-none d-md-block">
             <h5 className="footer-title ">LINK UTILI</h5>
-            <ul className="list-unstyled">
+            <ul>
               <li>
                 <Link to="/chiSono" className="footer-link">
                   Chi Sono
@@ -64,7 +64,7 @@ const FooterComponent = () => {
           </Col>
 
           {/* Colonna Social */}
-          <Col md={4} className="mb-3 text-center">
+          <Col sm={6} md={4} className="mb-3 text-center">
             <h5 className="footer-title">SEGUIMI</h5>
             <a href="https://www.instagram.com/_as_coach/" target="_blank" rel="noopener noreferrer" className="me-3 footer-social">
               <i className="fab fa-instagram"></i>

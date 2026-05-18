@@ -25,11 +25,11 @@ const Home = () => {
 
       {/*---- VIDEO DI SFONDO -----*/}
       <section className="sezione-video-bg text-center pb-2 position-relative">
-        <video autoPlay muted loop className="video-background ">
+        {/* <video autoPlay muted loop className="video-background ">
           <source src={videoSfondo} type="video/mp4" />
-        </video>
+        </video> */}
 
-        <div className="contenuto-form position-relative z-1">
+        <div className="contenuto-form mb-5">
           <Row>
             <Col md={4}></Col>
             <Col md={4}>
